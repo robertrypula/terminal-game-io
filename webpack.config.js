@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const WrapperPlugin = require('wrapper-webpack-plugin');
 const { readFileSync } = require('fs');
 const packageJson = require('./package.json');
@@ -41,10 +40,10 @@ function getConfig(env) {
     resolve: {
       extensions: ['.ts','.js']
     },
+    target: 'node',
     output: {
       filename: '[name].js',
       library: libraryName,
-      libraryTarget: 'umd',
       path: path.resolve(__dirname, 'dist')
     },
     plugins: [
@@ -62,41 +61,16 @@ function getConfig(env) {
 function fillDev(config) {
   config.mode = 'development';
   config.entry = {
-    [`${packageName}-v${version}`]: './src/index.ts'
-  };
-
-  config.devtool = 'inline-source-map';
-
-  config.devServer = {
-    contentBase: path.resolve(__dirname),
-    publicPath: '/dist/',
-    compress: true,
-    port: 8000,
-    hot: false,
-    openPage: 'example/typescript-rewrite-test-page.html',
-    overlay: {
-      warnings: true,
-      errors: true
-    }
+    [`${packageName}-v${version}`]: './src/index.ts',
+    [`demo`]: './src/demo.ts'
   };
 }
 
 function fillProd(config) {
-  config.mode = 'none';   // TODO: should be 'production'
+  config.mode = 'production';
   config.entry = {
-    // TODO: BUG!! after introducing webpack 'modes' both files are minified - find the fix
-    [`${packageName}-v${version}`]: './src/index.ts',
-    [`${packageName}-v${version}.min`]: './src/index.ts',
+    [`${packageName}-v${version}.min`]: './src/index.ts'
   };
-
-  config.devtool = 'source-map';
-
-  config.plugins.unshift(
-    new UglifyJsPlugin({
-      include: /\.min\.js$/,
-      sourceMap: true
-    })
-  );
 }
 
 module.exports = (env) => {
@@ -111,4 +85,4 @@ module.exports = (env) => {
   }
 
   return config;
-}
+};

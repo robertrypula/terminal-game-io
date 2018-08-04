@@ -8,7 +8,7 @@ export type KeypressHandler = (time: number, keyName: string) => void;
 export type FrameHandler = (time: number) => void;
 
 export class TerminalGameIo {
-  protected intervalId: NodeJS.Timer;
+  protected intervalId: any;
   protected startTime: number;
   protected frameDuration: number;
   protected keypressHandler: KeypressHandler;
@@ -21,15 +21,19 @@ export class TerminalGameIo {
   ) {
     this.keypressHandler = keypressHandler;
     this.frameHandler = frameHandler;
-    this.frameDuration = Math.round(1000  / fps);
+    this.frameDuration = Math.round(1000 / fps);
     this.startTime = new Date().getTime();
     this.initialize();
     setTimeout(() => this.frameHandler(this.getTime()), 0);
   }
 
-  public draw(frame: string[], width: number, height: number): void {
+  public draw(frame: string, width: number, height: number): void {
     let index = 0;
     let line;
+
+    if (frame.length !== width * height) {
+      throw new Error('Frame data is not matching frame dimensions');
+    }
 
     this.gotoxy(1, 1);
     for (let y = 0; y < height; y++) {
@@ -37,8 +41,12 @@ export class TerminalGameIo {
       for (let x = 0; x < width; x++) {
         line += frame[index++];
       }
-      process.stdout.write(line + '\n');
+      this.write(line + '\n');
     }
+  }
+
+  public write(value: string): void {
+    process.stdout.write(value);
   }
 
   public exit(): void {

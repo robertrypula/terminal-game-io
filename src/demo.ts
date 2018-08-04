@@ -1,4 +1,6 @@
-import {FrameHandler, KeypressHandler, TerminalGameIo} from '../src/index';
+// Copyright (c) 2015-2018 Robert Rypuła
+
+import { FrameHandler, KeypressHandler, TerminalGameIo } from './index';
 
 const BOARD_WIDTH = 80;
 const BOARD_HEIGHT = 24;
@@ -37,16 +39,15 @@ const frameHandler: FrameHandler = (time: number) => {
 
   for (let y = 0; y < BOARD_HEIGHT; y++) {
     for (let x = 0; x < BOARD_WIDTH; x++) {
-      frame += (posX === x && posY === y)
-        ? '@'
-        : '.';
+      frame += (posX === x && posY === y) ? '@' : '.';
     }
   }
 
-  terminalGameIo.draw(frame.split(''), BOARD_WIDTH, BOARD_HEIGHT);
-  console.log('Frame: ' + (frameNumber++));
-  console.log('Time: ' + time.toFixed(3) + 's');
-  console.log('Last key name: ' + lastKeyName + '                ');
+  terminalGameIo.draw(frame, BOARD_WIDTH, BOARD_HEIGHT);
+  terminalGameIo.write('Frame: ' + (frameNumber++) + '\n');
+  terminalGameIo.write('Time: ' + time.toFixed(3) + 's\n');
+  terminalGameIo.write('Last key name: ' + lastKeyName + '                \n\n');
+  terminalGameIo.write('Press Escape to exit...\n');
 };
 
-let terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, 5);
+const terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, 5);
