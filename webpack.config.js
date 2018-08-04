@@ -38,14 +38,19 @@ function getConfig(env) {
       ]
     },
     resolve: {
-      extensions: ['.ts','.js']
+      extensions: ['.ts', '.js']
     },
-    target: 'node',
+    target: 'web',
     output: {
       filename: '[name].js',
       library: libraryName,
-      libraryTarget: 'commonjs2',
-      path: path.resolve(__dirname, 'dist')
+      libraryTarget: 'umd',
+      path: path.resolve(__dirname, 'dist'),
+      globalObject: 'this'
+    },
+    externals: {
+      process: 'process',
+      readline: 'readline'
     },
     plugins: [
       new webpack.DefinePlugin({
@@ -65,13 +70,30 @@ function fillDev(config) {
     [`${packageName}-v${version}`]: './src/index.ts',
     [`demo`]: './src/demo.ts'
   };
+
+  config.devtool = 'inline-source-map';
+
+  config.devServer = {
+    contentBase: path.resolve(__dirname),
+    publicPath: '/dist/',
+    compress: true,
+    port: 8000,
+    hot: false,
+    openPage: 'demo-web/index.html',
+    overlay: {
+      warnings: true,
+      errors: true
+    }
+  };
 }
 
 function fillProd(config) {
   config.mode = 'production';
   config.entry = {
-    [`${packageName}-v${version}.min`]: './src/index.ts'
+    [`${packageName}-v${version}`]: './src/index.ts'
   };
+
+  config.devtool = 'source-map';
 }
 
 module.exports = (env) => {

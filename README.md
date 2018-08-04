@@ -6,7 +6,7 @@
 [![dependencies Status](https://david-dm.org/robertrypula/terminal-game-io/status.svg)](https://david-dm.org/robertrypula/terminal-game-io)
 [![devDependencies Status](https://david-dm.org/robertrypula/terminal-game-io/dev-status.svg)](https://david-dm.org/robertrypula/terminal-game-io?type=dev)
 
-Wrapper for NodeJs that allows to write simple terminal games. It supports basic output (ASCII 'frame') and input (keypress events)
+It's never been easier to start writing terminal games in NodeJs. This project handles for you basic input (keyboard events) and output (ASCII 'frame'). Web browser is also supported - you can share your games in very simple 'web terminal' too!   
 
 ## Installation
 
@@ -14,7 +14,7 @@ Wrapper for NodeJs that allows to write simple terminal games. It supports basic
 npm install terminal-game-io --save
 ```
 
-## Usage - JavaScript
+## Example - NodeJs, pure JavaScript
 
 ```javascript
 const TerminalGameIo = require('terminal-game-io').TerminalGameIo;
@@ -66,14 +66,14 @@ const frameHandler = (time) => {
   terminalGameIo.write('Frame: ' + (frameNumber++) + '\n');
   terminalGameIo.write('Time: ' + time.toFixed(3) + 's\n');
   terminalGameIo.write('Last key name: ' + lastKeyName + '                \n\n');
-  terminalGameIo.write('Use cursors to move.\n');
+  terminalGameIo.write('Use arrows to move.\n');
   terminalGameIo.write('Press Escape to exit...\n');
 };
 
 terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);
 ```
 
-## Usage - Typescript
+## Example - TypeScript
 
 ```typescript
 import { FrameHandler, KeypressHandler, TerminalGameIo } from 'terminal-game-io';
@@ -137,7 +137,14 @@ terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);
 git clone https://github.com/robertrypula/terminal-game-io.git
 cd terminal-game-io
 npm install
+
 npm run demo
+```
+
+This library supports also web mode:
+
+```
+npm run demo-web
 ```
 
 ## Licence

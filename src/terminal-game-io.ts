@@ -1,8 +1,11 @@
 // Copyright (c) 2018 Robert Rypuła
 
+import * as process from 'process';
 import * as readline from 'readline';
 
-const csi = String.fromCharCode(0x1b) + '[';
+const CSI = String.fromCharCode(0x1b) + '[';
+const isBrowser = () => typeof document !== 'undefined';
+const getDomElement = () => document.getElementById('terminal-game-io');
 
 export type KeypressHandler = (time: number, keyName: string) => void;
 export type FrameHandler = (time: number) => void;
@@ -35,7 +38,7 @@ export class TerminalGameIo {
       throw new Error('Frame data is not matching drawFrame dimensions');
     }
 
-    this.goto(1, 1);
+    this.clear();
     for (let y = 0; y < height; y++) {
       line = '';
       for (let x = 0; x < width; x++) {
@@ -46,16 +49,46 @@ export class TerminalGameIo {
   }
 
   public write(value: string): void {
-    process.stdout.write(value);
+    let domElement;
+
+    // TODO remove condition by spliting code into two classes
+    if (process) {
+      process.stdout.write(value);
+    } else if (isBrowser()) {
+      domElement = getDomElement();
+      if (domElement) {
+        domElement.innerHTML = domElement.innerHTML + value;
+      }
+    }
   }
 
   public exit(): void {
     clearInterval(this.intervalId);
-    process.exit();
+
+    // TODO remove condition by spliting code into two classes
+    if (process) {
+      process.exit();
+    } else if (isBrowser()) {
+      document.removeEventListener('keydown', this.keydownEventListener);
+    }
   }
 
-  public goto(x: number, y: number): void {
-    process.stdout.write(csi + y + ';' + x + 'H');
+  protected keydownEventListener = (e: KeyboardEvent) => {
+    this.keypressHandler(this.getTime(), e.key);
+  }
+
+  protected clear(): void {
+    let domElement;
+
+    // TODO remove condition by spliting code into two classes
+    if (process) {
+      process.stdout.write(CSI + 1 + ';' + 1 + 'H');
+    } else if (isBrowser()) {
+      domElement = getDomElement();
+      if (domElement) {
+        domElement.innerHTML = '';
+      }
+    }
   }
 
   protected getTime(): number {
@@ -66,11 +99,16 @@ export class TerminalGameIo {
   }
 
   protected initialize() {
-    readline.emitKeypressEvents(process.stdin);
-    process.stdin.setRawMode(true);
-    process.stdin.on('keypress', (str, key) => {
-      this.keypressHandler(this.getTime(), key.name);
-    });
+    // TODO remove condition by spliting code into two classes
+    if (readline) {
+      readline.emitKeypressEvents(process.stdin);
+      process.stdin.setRawMode(true);
+      process.stdin.on('keypress', (str, key) => {
+        this.keypressHandler(this.getTime(), key.name);
+      });
+    } else if (isBrowser()) {
+      document.addEventListener('keydown', this.keydownEventListener);
+    }
     this.intervalId = setInterval(() => this.frameHandler(this.getTime()), this.frameDuration);
   }
 }

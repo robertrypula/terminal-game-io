@@ -11,9 +11,9 @@
   "author": "Robert Rypuła",
   "license": "MIT",
   "scripts": {
-    "dev": "npm run clean && webpack --env.DEVELOPMENT --watch",
     "build": "npm run clean && npm run test && npm run lint && npm run lint:tsfmt:verify && webpack --env.PRODUCTION",
     "demo": "npm run clean && webpack --env.DEVELOPMENT && node dist/demo.js",
+    "demo-web": "npm run clean && webpack-dev-server --env.DEVELOPMENT --open",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
@@ -24,7 +24,7 @@
     "npm-check": "npm-check --skip-unused",
     "npm-check:u": "npm-check --skip-unused -u"
   },
-  "main": "dist/terminal-game-io-v1.0.0.min.js",
+  "main": "dist/terminal-game-io-v1.0.0.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist/"
@@ -67,6 +67,7 @@
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.8.1",
     "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5",
     "wrapper-webpack-plugin": "^2.0.0"
   },
   "dependencies": {}

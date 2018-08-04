@@ -49,7 +49,7 @@ const frameHandler: FrameHandler = (time: number) => {
   terminalGameIo.write('Frame: ' + (frameNumber++) + '\n');
   terminalGameIo.write('Time: ' + time.toFixed(3) + 's\n');
   terminalGameIo.write('Last key name: ' + lastKeyName + '                \n\n');
-  terminalGameIo.write('Use cursors to move.\n');
+  terminalGameIo.write('Use arrows to move.\n');
   terminalGameIo.write('Press Escape to exit...\n');
 };
 
