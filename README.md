@@ -8,9 +8,78 @@
 
 Wrapper for NodeJs that allows to write simple terminal games. It supports basic output (ASCII 'frame') and input (keypress events)
 
+## Installation
+
+```
+npm install terminal-games-io --save
+```
+
 ## Usage
 
+```typescript
+import { FrameHandler, KeypressHandler, TerminalGameIo } from 'terminal-games-io';
 
+const FPS = 5;
+const BOARD_WIDTH = 80;
+const BOARD_HEIGHT = 24;
+
+let terminalGameIo: TerminalGameIo;
+let lastKeyName = '';
+let posX = 0;
+let posY = 0;
+let frameNumber = 0;
+
+const keypressHandler: KeypressHandler = (time: number, keyName: string) => {
+  lastKeyName = keyName;
+
+  switch (keyName) {
+    case 'down':
+      posY++;
+      break;
+    case 'up':
+      posY--;
+      break;
+    case 'left':
+      posX--;
+      break;
+    case 'right':
+      posX++;
+      break;
+    case 'escape':
+      terminalGameIo.exit();
+      break;
+  }
+
+  frameHandler(time);
+};
+
+const frameHandler: FrameHandler = (time: number) => {
+  let frame = '';
+
+  for (let y = 0; y < BOARD_HEIGHT; y++) {
+    for (let x = 0; x < BOARD_WIDTH; x++) {
+      frame += (posX === x && posY === y) ? '@' : '.';
+    }
+  }
+
+  terminalGameIo.draw(frame, BOARD_WIDTH, BOARD_HEIGHT);
+  terminalGameIo.write('Frame: ' + (frameNumber++) + '\n');
+  terminalGameIo.write('Time: ' + time.toFixed(3) + 's\n');
+  terminalGameIo.write('Last key name: ' + lastKeyName + '                \n\n');
+  terminalGameIo.write('Press Escape to exit...\n');
+};
+
+terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);
+```
+
+## Want to check this project in development mode?
+
+```
+git clone https://github.com/robertrypula/terminal-game-io.git
+cd terminal-game-io
+npm install
+npm run demo
+```
 
 ## Licence
 

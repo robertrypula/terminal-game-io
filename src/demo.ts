@@ -2,9 +2,11 @@
 
 import { FrameHandler, KeypressHandler, TerminalGameIo } from './index';
 
+const FPS = 5;
 const BOARD_WIDTH = 80;
 const BOARD_HEIGHT = 24;
 
+let terminalGameIo: TerminalGameIo;
 let lastKeyName = '';
 let posX = 0;
 let posY = 0;
@@ -50,4 +52,4 @@ const frameHandler: FrameHandler = (time: number) => {
   terminalGameIo.write('Press Escape to exit...\n');
 };
 
-const terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, 5);
+terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);
