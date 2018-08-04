@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@types/jest": "^23.3.1",
+    "@types/node": "^10.5.6",
     "coveralls": "^3.0.1",
     "jest": "^23.4.2",
     "npm-check": "^5.7.0",
@@ -68,7 +69,5 @@
     "webpack-cli": "^3.1.0",
     "wrapper-webpack-plugin": "^2.0.0"
   },
-  "dependencies": {
-    "@types/node": "^10.5.6"
-  }
+  "dependencies": {}
 }
