@@ -1,7 +1,18 @@
 // Copyright (c) 2018 Robert Rypuła
 
+import { TerminalGameIo } from './terminal-game-io';
+
 describe('TerminalGameIo', () => {
-  it('should work', () => {
-    expect(true).toBe(true);
+  it('should create proper instance', () => {
+    const instance = new TerminalGameIo(
+      /*tslint:disable*/
+      (time: number, keyName: string) => { },
+      (time: number) => { },
+      /*tslint:enable*/
+      5
+    );
+
+    expect(instance).toBeTruthy();
+    expect(instance).toBeInstanceOf(TerminalGameIo);
   });
 });
