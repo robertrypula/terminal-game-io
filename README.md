@@ -6,7 +6,9 @@
 [![dependencies Status](https://david-dm.org/robertrypula/terminal-game-io/status.svg)](https://david-dm.org/robertrypula/terminal-game-io)
 [![devDependencies Status](https://david-dm.org/robertrypula/terminal-game-io/dev-status.svg)](https://david-dm.org/robertrypula/terminal-game-io?type=dev)
 
-It's never been easier to start writing terminal games in NodeJs. This project handles for you basic input (keyboard events) and output (ASCII 'frame'). Web browser is also supported - you can share your games in very simple 'web terminal' too!   
+It's never been easier to start writing terminal games in NodeJs. This package handles for you basic input (keyboard events) and output (ASCII 'frame'). 
+
+If you like to share your games directly in the browser don't worry - simple 'web terminal' emulator is supported too!
 
 ## Installation
 
@@ -129,6 +131,77 @@ const frameHandler: FrameHandler = (time: number) => {
 };
 
 terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);
+```
+
+## Example - 'web terminal' in your browser in pure JavaScript
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Terminal Game UI - web demo</title>
+  <script src="../dist/terminal-game-io-v1.0.0.js"></script><!-- TODO update url to https://unpkg.com/ after new release -->
+</head>
+<body>
+  <pre id="terminal-game-io"></pre>
+
+  <script>
+    const FPS = 5;
+    const BOARD_WIDTH = 40;
+    const BOARD_HEIGHT = 12;
+
+    let terminalGameIo;
+    let lastKeyName = '';
+    let posX = Math.round(BOARD_WIDTH / 2);
+    let posY = Math.round(BOARD_HEIGHT / 2);
+    let frameNumber = 0;
+
+    const keypressHandler = (time, keyName) => {
+      lastKeyName = keyName;
+
+      switch (keyName) {
+        case 'ArrowDown':
+          posY = (posY + 1) % BOARD_HEIGHT;
+          break;
+        case 'ArrowUp':
+          posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
+          break;
+        case 'ArrowLeft':
+          posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
+          break;
+        case 'ArrowRight':
+          posX = (posX + 1) % BOARD_WIDTH;
+          break;
+        case 'Escape':
+          terminalGameIo.exit();
+          break;
+      }
+
+      frameHandler(time);
+    };
+
+    const frameHandler = (time) => {
+      let frameData = '';
+
+      for (let y = 0; y < BOARD_HEIGHT; y++) {
+        for (let x = 0; x < BOARD_WIDTH; x++) {
+          frameData += (posX === x && posY === y) ? '@' : '.';
+        }
+      }
+
+      terminalGameIo.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
+      terminalGameIo.write('Frame: ' + (frameNumber++) + '\n');
+      terminalGameIo.write('Time: ' + time.toFixed(3) + 's\n');
+      terminalGameIo.write('Last key name: ' + lastKeyName + '                \n\n');
+      terminalGameIo.write('Use arrows to move.\n');
+      terminalGameIo.write('Press Escape to exit...\n');
+    };
+
+    terminalGameIo = new TerminalGameIo.TerminalGameIo(keypressHandler, frameHandler, FPS);
+  </script>
+</body>
+</html>
 ```
 
 ## Want to check this project in development mode?
