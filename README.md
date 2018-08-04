@@ -1,23 +1,23 @@
 # Terminal Games IO
 
-[![npm version](https://badge.fury.io/js/terminal-games-io.svg)](https://badge.fury.io/js/terminal-games-io)
-[![Build Status](https://travis-ci.org/robertrypula/terminal-games-io.svg?branch=master)](https://travis-ci.org/robertrypula/terminal-games-io)
-[![Coverage Status](https://coveralls.io/repos/github/robertrypula/terminal-games-io/badge.svg?branch=master)](https://coveralls.io/github/robertrypula/terminal-games-io?branch=master)
-[![dependencies Status](https://david-dm.org/robertrypula/terminal-games-io/status.svg)](https://david-dm.org/robertrypula/terminal-games-io)
-[![devDependencies Status](https://david-dm.org/robertrypula/terminal-games-io/dev-status.svg)](https://david-dm.org/robertrypula/terminal-games-io?type=dev)
+[![npm version](https://badge.fury.io/js/terminal-game-io.svg)](https://badge.fury.io/js/terminal-game-io)
+[![Build Status](https://travis-ci.org/robertrypula/terminal-game-io.svg?branch=master)](https://travis-ci.org/robertrypula/terminal-game-io)
+[![Coverage Status](https://coveralls.io/repos/github/robertrypula/terminal-game-io/badge.svg?branch=master)](https://coveralls.io/github/robertrypula/terminal-game-io?branch=master)
+[![dependencies Status](https://david-dm.org/robertrypula/terminal-game-io/status.svg)](https://david-dm.org/robertrypula/terminal-game-io)
+[![devDependencies Status](https://david-dm.org/robertrypula/terminal-game-io/dev-status.svg)](https://david-dm.org/robertrypula/terminal-game-io?type=dev)
 
 Wrapper for NodeJs that allows to write simple terminal games. It supports basic output (ASCII 'frame') and input (keypress events)
 
 ## Installation
 
 ```
-npm install terminal-games-io --save
+npm install terminal-game-io --save
 ```
 
 ## Usage
 
 ```typescript
-import { FrameHandler, KeypressHandler, TerminalGameIo } from 'terminal-games-io';
+import { FrameHandler, KeypressHandler, TerminalGameIo } from 'terminal-game-io';
 
 const FPS = 5;
 const BOARD_WIDTH = 80;
