@@ -1,4 +1,4 @@
-// Copyright (c) 2015-2018 Robert Rypuła
+// Copyright (c) 2018 Robert Rypuła
 
 describe('TerminalGameIo', () => {
   it('should work', () => {

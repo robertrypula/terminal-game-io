@@ -44,8 +44,12 @@ function getConfig(env) {
     output: {
       filename: '[name].js',
       library: libraryName,
+      libraryTarget: 'commonjs2',
       path: path.resolve(__dirname, 'dist')
     },
+    // externals: {
+    //   readline: 'readline'
+    // },
     plugins: [
       new webpack.DefinePlugin({
         DEVELOPMENT: JSON.stringify(env.DEVELOPMENT === true),
@@ -67,7 +71,7 @@ function fillDev(config) {
 }
 
 function fillProd(config) {
-  config.mode = 'production';
+  config.mode = 'development';        // TODO check why production mode is not working
   config.entry = {
     [`${packageName}-v${version}.min`]: './src/index.ts'
   };

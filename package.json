@@ -1,7 +1,7 @@
 {
   "name": "terminal-game-io",
   "version": "1.0.0",
-  "description": "Data transmission over sound waves written in JavaScript without any dependencies. All you need is just microphone, speakers and the browser!",
+  "description": "Wrapper for NodeJs that allows to write simple terminal games. It supports basic output (ASCII 'frame') and input (keypress events).",
   "keywords": [
     "terminal games",
     "terminal render frame",

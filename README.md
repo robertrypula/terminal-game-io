@@ -1,4 +1,4 @@
-# Terminal Games IO
+# Terminal Game IO
 
 [![npm version](https://badge.fury.io/js/terminal-game-io.svg)](https://badge.fury.io/js/terminal-game-io)
 [![Build Status](https://travis-ci.org/robertrypula/terminal-game-io.svg?branch=master)](https://travis-ci.org/robertrypula/terminal-game-io)
@@ -14,7 +14,66 @@ Wrapper for NodeJs that allows to write simple terminal games. It supports basic
 npm install terminal-game-io --save
 ```
 
-## Usage
+## Usage - JavaScript
+
+```javascript
+const TerminalGameIo = require('terminal-game-io').TerminalGameIo;
+
+const FPS = 5;
+const BOARD_WIDTH = 40;
+const BOARD_HEIGHT = 12;
+
+let terminalGameIo;
+let lastKeyName = '';
+let posX = Math.round(BOARD_WIDTH / 2);
+let posY = Math.round(BOARD_HEIGHT / 2);
+let frameNumber = 0;
+
+const keypressHandler = (time, keyName) => {
+  lastKeyName = keyName;
+
+  switch (keyName) {
+    case 'down':
+      posY = (posY + 1) % BOARD_HEIGHT;
+      break;
+    case 'up':
+      posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
+      break;
+    case 'left':
+      posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
+      break;
+    case 'right':
+      posX = (posX + 1) % BOARD_WIDTH;
+      break;
+    case 'escape':
+      terminalGameIo.exit();
+      break;
+  }
+
+  frameHandler(time);
+};
+
+const frameHandler = (time) => {
+  let frameData = '';
+
+  for (let y = 0; y < BOARD_HEIGHT; y++) {
+    for (let x = 0; x < BOARD_WIDTH; x++) {
+      frameData += (posX === x && posY === y) ? '@' : '.';
+    }
+  }
+
+  terminalGameIo.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
+  terminalGameIo.write('Frame: ' + (frameNumber++) + '\n');
+  terminalGameIo.write('Time: ' + time.toFixed(3) + 's\n');
+  terminalGameIo.write('Last key name: ' + lastKeyName + '                \n\n');
+  terminalGameIo.write('Use cursors to move.\n');
+  terminalGameIo.write('Press Escape to exit...\n');
+};
+
+terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);
+```
+
+## Usage - Typescript
 
 ```typescript
 import { FrameHandler, KeypressHandler, TerminalGameIo } from 'terminal-game-io';
@@ -85,7 +144,7 @@ npm run demo
 
 The MIT License (MIT)
 
-Copyright (c) 2015-2018 Robert Rypuła
+Copyright (c) 2018 Robert Rypuła
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
