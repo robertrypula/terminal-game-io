@@ -6,9 +6,13 @@
 [![dependencies Status](https://david-dm.org/robertrypula/terminal-game-io/status.svg)](https://david-dm.org/robertrypula/terminal-game-io)
 [![devDependencies Status](https://david-dm.org/robertrypula/terminal-game-io/dev-status.svg)](https://david-dm.org/robertrypula/terminal-game-io?type=dev)
 
-It's never been easier to start writing terminal games in NodeJs. This package handles for you basic input (keyboard events) and output (ASCII 'frame'). 
+It's never been easier to start writing terminal games in NodeJs. This package handles for you basic input (keyboard events) and output (ASCII 'frame').
+
+[![Terminal example](https://cdn.rypula.pl/terminal-game-io/terminal.gif)](https://cdn.rypula.pl/terminal-game-io/terminal.gif) 
 
 If you like to share your games directly in the browser don't worry - simple 'web terminal' emulator is supported too!
+
+[![Terminal example](https://cdn.rypula.pl/terminal-game-io/web-browser.gif)](https://cdn.rypula.pl/terminal-game-io/web-browser.gif)
 
 ## Installation
 
@@ -141,7 +145,7 @@ terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);
 <head>
     <meta charset="UTF-8">
     <title>Terminal Game UI - web demo</title>
-  <script src="../dist/terminal-game-io-v1.0.0.js"></script><!-- TODO update url to https://unpkg.com/ after new release -->
+  <script src="https://unpkg.com/terminal-game-io"></script>
 </head>
 <body>
   <pre id="terminal-game-io"></pre>
@@ -242,4 +246,3 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
