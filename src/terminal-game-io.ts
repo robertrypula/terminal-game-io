@@ -1,4 +1,4 @@
-// Copyright (c) 2018 Robert Rypuła
+// Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula/terminal-game-io
 
 import * as process from 'process';
 import * as readline from 'readline';
