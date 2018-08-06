@@ -23,7 +23,7 @@ npm install terminal-game-io --save
 ## Example - NodeJs, pure JavaScript
 
 ```javascript
-const TerminalGameIo = require('terminal-game-io').TerminalGameIo;
+const createTerminalGameIo = require('terminal-game-io').createTerminalGameIo;
 
 const FPS = 5;
 const BOARD_WIDTH = 40;
@@ -35,7 +35,24 @@ let posX = Math.round(BOARD_WIDTH / 2);
 let posY = Math.round(BOARD_HEIGHT / 2);
 let frameNumber = 0;
 
-const keypressHandler = (time, keyName) => {
+const frameHandler = (instance) => {
+  let frameData = '';
+
+  for (let y = 0; y < BOARD_HEIGHT; y++) {
+    for (let x = 0; x < BOARD_WIDTH; x++) {
+      frameData += (posX === x && posY === y) ? '@' : '.';
+    }
+  }
+
+  instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
+  instance.write('Frame: ' + (frameNumber++) + '\n');
+  instance.write('Time: ' + instance.getTime().toFixed(3) + 's\n');
+  instance.write('Last key name: ' + lastKeyName + '                \n\n');
+  instance.write('Use arrows to move.\n');
+  instance.write('Press Escape to exit...\n');
+};
+
+const keypressHandler = (instance, keyName) => {
   lastKeyName = keyName;
 
   switch (keyName) {
@@ -52,14 +69,41 @@ const keypressHandler = (time, keyName) => {
       posX = (posX + 1) % BOARD_WIDTH;
       break;
     case 'escape':
-      terminalGameIo.exit();
+      instance.exit();
       break;
   }
 
-  frameHandler(time);
+  frameHandler(instance);
 };
 
-const frameHandler = (time) => {
+terminalGameIo = createTerminalGameIo({
+  fps: FPS,
+  frameHandler,
+  keypressHandler
+});
+```
+
+## Example - TypeScript
+
+```typescript
+import {
+  createTerminalGameIo,
+  FrameHandler,
+  ITerminalGameIo,
+  KeypressHandler
+} from 'terminal-game-io';
+
+const FPS = 5;
+const BOARD_WIDTH = 40;
+const BOARD_HEIGHT = 12;
+
+let terminalGameIo: ITerminalGameIo;
+let lastKeyName = '';
+let posX = Math.round(BOARD_WIDTH / 2);
+let posY = Math.round(BOARD_HEIGHT / 2);
+let frameNumber = 0;
+
+const frameHandler: FrameHandler = (instance: ITerminalGameIo) => {
   let frameData = '';
 
   for (let y = 0; y < BOARD_HEIGHT; y++) {
@@ -68,73 +112,43 @@ const frameHandler = (time) => {
     }
   }
 
-  terminalGameIo.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
-  terminalGameIo.write('Frame: ' + (frameNumber++) + '\n');
-  terminalGameIo.write('Time: ' + time.toFixed(3) + 's\n');
-  terminalGameIo.write('Last key name: ' + lastKeyName + '                \n\n');
-  terminalGameIo.write('Use arrows to move.\n');
-  terminalGameIo.write('Press Escape to exit...\n');
+  instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
+  instance.write('Frame: ' + (frameNumber++) + '\n');
+  instance.write('Time: ' + instance.getTime().toFixed(3) + 's\n');
+  instance.write('Last key name: ' + lastKeyName + '                \n\n');
+  instance.write('Use arrows to move.\n');
+  instance.write('Press Escape to exit...\n');
 };
 
-terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);
-```
-
-## Example - TypeScript
-
-```typescript
-import { FrameHandler, KeypressHandler, TerminalGameIo } from 'terminal-game-io';
-
-const FPS = 5;
-const BOARD_WIDTH = 80;
-const BOARD_HEIGHT = 24;
-
-let terminalGameIo: TerminalGameIo;
-let lastKeyName = '';
-let posX = 0;
-let posY = 0;
-let frameNumber = 0;
-
-const keypressHandler: KeypressHandler = (time: number, keyName: string) => {
+const keypressHandler: KeypressHandler = (instance: ITerminalGameIo, keyName: string) => {
   lastKeyName = keyName;
 
   switch (keyName) {
     case 'down':
-      posY++;
+      posY = (posY + 1) % BOARD_HEIGHT;
       break;
     case 'up':
-      posY--;
+      posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
       break;
     case 'left':
-      posX--;
+      posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
       break;
     case 'right':
-      posX++;
+      posX = (posX + 1) % BOARD_WIDTH;
       break;
     case 'escape':
-      terminalGameIo.exit();
+      instance.exit();
       break;
   }
 
-  frameHandler(time);
+  frameHandler(instance);
 };
 
-const frameHandler: FrameHandler = (time: number) => {
-  let frame = '';
-
-  for (let y = 0; y < BOARD_HEIGHT; y++) {
-    for (let x = 0; x < BOARD_WIDTH; x++) {
-      frame += (posX === x && posY === y) ? '@' : '.';
-    }
-  }
-
-  terminalGameIo.draw(frame, BOARD_WIDTH, BOARD_HEIGHT);
-  terminalGameIo.write('Frame: ' + (frameNumber++) + '\n');
-  terminalGameIo.write('Time: ' + time.toFixed(3) + 's\n');
-  terminalGameIo.write('Last key name: ' + lastKeyName + '                \n\n');
-  terminalGameIo.write('Press Escape to exit...\n');
-};
-
-terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);
+terminalGameIo = createTerminalGameIo({
+  fps: FPS,
+  frameHandler,
+  keypressHandler
+});
 ```
 
 ## Example - 'web terminal' in your browser in pure JavaScript
@@ -143,12 +157,12 @@ terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Terminal Game UI - web demo</title>
+  <meta charset="UTF-8">
+  <title>Terminal Game UI - web demo</title>
   <script src="https://unpkg.com/terminal-game-io"></script>
 </head>
 <body>
-  <pre id="terminal-game-io"></pre>
+  <pre id="root"></pre>
 
   <script>
     const FPS = 5;
@@ -161,7 +175,24 @@ terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);
     let posY = Math.round(BOARD_HEIGHT / 2);
     let frameNumber = 0;
 
-    const keypressHandler = (time, keyName) => {
+    const frameHandler = (instance) => {
+      let frameData = '';
+
+      for (let y = 0; y < BOARD_HEIGHT; y++) {
+        for (let x = 0; x < BOARD_WIDTH; x++) {
+          frameData += (posX === x && posY === y) ? '@' : '.';
+        }
+      }
+
+      instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
+      instance.write('Frame: ' + (frameNumber++) + '\n');
+      instance.write('Time: ' + instance.getTime().toFixed(3) + 's\n');
+      instance.write('Last key name: ' + lastKeyName + '\n\n');
+      instance.write('Use arrows to move.\n');
+      instance.write('Press Escape to exit...\n');
+    };
+
+    const keypressHandler = (instance, keyName) => {
       lastKeyName = keyName;
 
       switch (keyName) {
@@ -178,31 +209,18 @@ terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);
           posX = (posX + 1) % BOARD_WIDTH;
           break;
         case 'Escape':
-          terminalGameIo.exit();
+          instance.exit();
           break;
       }
 
-      frameHandler(time);
+      frameHandler(instance);
     };
 
-    const frameHandler = (time) => {
-      let frameData = '';
-
-      for (let y = 0; y < BOARD_HEIGHT; y++) {
-        for (let x = 0; x < BOARD_WIDTH; x++) {
-          frameData += (posX === x && posY === y) ? '@' : '.';
-        }
-      }
-
-      terminalGameIo.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
-      terminalGameIo.write('Frame: ' + (frameNumber++) + '\n');
-      terminalGameIo.write('Time: ' + time.toFixed(3) + 's\n');
-      terminalGameIo.write('Last key name: ' + lastKeyName + '                \n\n');
-      terminalGameIo.write('Use arrows to move.\n');
-      terminalGameIo.write('Press Escape to exit...\n');
-    };
-
-    terminalGameIo = new TerminalGameIo.TerminalGameIo(keypressHandler, frameHandler, FPS);
+    terminalGameIo = new TerminalGameIo.createTerminalGameIo({
+      fps: FPS,
+      frameHandler: frameHandler,
+      keypressHandler: keypressHandler
+    });
   </script>
 </body>
 </html>

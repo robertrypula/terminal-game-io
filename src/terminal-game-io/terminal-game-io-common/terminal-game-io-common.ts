@@ -1,38 +1,31 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula/terminal-game-io
 
-import { process, emitKeypressEvents } from '../node-dependencies/node-dependencies';
-import { ITerminalGameIo } from './terminal-game-io.interface';
+import { process, emitKeypressEvents } from '../../node-dependencies/node-dependencies';
+import { FrameHandler, ITerminalGameIo, ITerminalGameIoOptions, KeypressHandler } from '../terminal-game-io.interface';
 
 const CSI = String.fromCharCode(0x1b) + '[';
 const isBrowser = () => typeof document !== 'undefined';
-const getDomElement = () => document.getElementById('terminal-game-io');
+const getDomElement = () => document.getElementById('root');
 
-export type KeypressHandler = (instance: TerminalGameIo, keyName: string) => void;
-export type FrameHandler = (instance: TerminalGameIo) => void;
-
-export class TerminalGameIo implements ITerminalGameIo {
-  protected intervalId: any;
-  protected startTime: number;
+export class TerminalGameIoCommon implements ITerminalGameIo {
   protected frameDuration: number;
-  protected keypressHandler: KeypressHandler;
   protected frameHandler: FrameHandler;
+  protected intervalId: any;
+  protected keypressHandler: KeypressHandler;
+  protected startTime: number;
 
-  constructor(
-    keypressHandler: KeypressHandler,
-    frameHandler: FrameHandler,
-    fps: number
-  ) {
-    this.keypressHandler = keypressHandler;
-    this.frameHandler = frameHandler;
-    this.frameDuration = Math.round(1000 / fps);
+  constructor(terminalGameIoOptions: ITerminalGameIoOptions) {
+    this.frameHandler = terminalGameIoOptions.frameHandler;
+    this.keypressHandler = terminalGameIoOptions.keypressHandler;
+    this.frameDuration = Math.round(1000 / terminalGameIoOptions.fps);
     this.startTime = new Date().getTime();
     this.initialize();
     this.frameHandler(this);
   }
 
   public drawFrame(frameData: string, width: number, height: number): void {
-    let index = 0;
-    let line;
+    let index: number = 0;
+    let line: string;
 
     if (frameData.length !== width * height) {
       throw new Error('Frame data is not matching drawFrame dimensions');
@@ -51,7 +44,7 @@ export class TerminalGameIo implements ITerminalGameIo {
   public write(value: string): void {
     let domElement;
 
-    // TODO remove condition by spliting code into two classes
+    // TODO remove condition by splitting code into two classes
     if (process) {
       process.stdout.write(value);
     } else if (isBrowser()) {
@@ -65,7 +58,7 @@ export class TerminalGameIo implements ITerminalGameIo {
   public exit(): void {
     clearInterval(this.intervalId);
 
-    // TODO remove condition by spliting code into two classes
+    // TODO remove condition by splitting code into two classes
     if (process) {
       process.exit();
     } else if (isBrowser()) {
@@ -83,7 +76,7 @@ export class TerminalGameIo implements ITerminalGameIo {
   protected clear(): void {
     let domElement;
 
-    // TODO remove condition by spliting code into two classes
+    // TODO remove condition by splitting code into two classes
     if (process) {
       process.stdout.write(CSI + 1 + ';' + 1 + 'H');
     } else if (isBrowser()) {
@@ -95,7 +88,7 @@ export class TerminalGameIo implements ITerminalGameIo {
   }
 
   protected initialize() {
-    // TODO remove condition by spliting code into two classes
+    // TODO remove condition by splitting code into two classes
     if (emitKeypressEvents) {
       emitKeypressEvents(process.stdin);
       process.stdin.setRawMode(true);

@@ -1,6 +1,25 @@
+// Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula/terminal-game-io
+
 export interface ITerminalGameIo {
   drawFrame(frameData: string, width: number, height: number): void;
   exit(): void;
   getTime(): number;
   write(value: string): void;
 }
+
+export interface ITerminalGameIoOptions {
+  fps: number;
+  frameHandler: FrameHandler;
+  keypressHandler: KeypressHandler;
+}
+
+export interface ITerminalGameIoStatic {
+  new(
+    terminalGameIoOptions: ITerminalGameIoOptions
+  ): ITerminalGameIo;
+}
+
+export type FrameHandler = (instance: ITerminalGameIo) => void;
+export type KeypressHandler = (instance: ITerminalGameIo, keyName: string) => void;
+
+export type TerminalGameIoFactory = (terminalGameIoOptions: ITerminalGameIoOptions) => ITerminalGameIo;

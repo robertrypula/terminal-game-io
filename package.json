@@ -1,6 +1,6 @@
 {
   "name": "terminal-game-io",
-  "version": "1.0.2",
+  "version": "2.0.0-rc1",
   "description": "Wrapper for NodeJs that allows to write simple terminal games. It supports basic output (ASCII 'frame') and input (keypress events).",
   "keywords": [
     "terminal games",
@@ -24,7 +24,7 @@
     "npm-check": "npm-check --skip-unused",
     "npm-check:u": "npm-check --skip-unused -u"
   },
-  "main": "dist/terminal-game-io-v1.0.2.js",
+  "main": "dist/terminal-game-io-v2.0.0-rc1.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist/"

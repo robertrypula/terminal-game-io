@@ -1,20 +1,15 @@
-import { FrameHandler, KeypressHandler, TerminalGameIo } from "./terminal-game-io";
-import { ITerminalGameIo } from "./terminal-game-io.interface";
+// Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula/terminal-game-io
 
-export type TerminalGameIoFactory = (
-  keypressHandler: KeypressHandler,
-  frameHandler: FrameHandler,
-  fps: number
-) => ITerminalGameIo;
+import { ITerminalGameIoOptions, ITerminalGameIoStatic, TerminalGameIoFactory } from './terminal-game-io.interface';
+import { TerminalGameIoCommon } from './terminal-game-io-common/terminal-game-io-common';
 
 export const createTerminalGameIo: TerminalGameIoFactory = (
-  keypressHandler: KeypressHandler,
-  frameHandler: FrameHandler,
-  fps: number
+  terminalGameIoOptions: ITerminalGameIoOptions
 ) => {
-  return new TerminalGameIo(
-    keypressHandler,
-    frameHandler,
-    fps
-  );
+  let factoryClass: ITerminalGameIoStatic;
+
+  // TODO split into two classes - one for console, one for web
+  factoryClass = TerminalGameIoCommon;
+
+  return new factoryClass(terminalGameIoOptions);
 };
