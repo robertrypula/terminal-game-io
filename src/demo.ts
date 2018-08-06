@@ -1,6 +1,7 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula/terminal-game-io
 
-import { FrameHandler, KeypressHandler, TerminalGameIo } from './terminal-game-io';
+import { FrameHandler, KeypressHandler, TerminalGameIo } from './terminal-game-io/terminal-game-io';
+import { ITerminalGameIo } from "./terminal-game-io/terminal-game-io.interface";
 
 const FPS = 5;
 const BOARD_WIDTH = 40;
@@ -12,7 +13,7 @@ let posX = Math.round(BOARD_WIDTH / 2);
 let posY = Math.round(BOARD_HEIGHT / 2);
 let frameNumber = 0;
 
-const keypressHandler: KeypressHandler = (time: number, keyName: string) => {
+const keypressHandler: KeypressHandler = (instance: ITerminalGameIo, keyName: string) => {
   lastKeyName = keyName;
 
   switch (keyName) {
@@ -29,14 +30,14 @@ const keypressHandler: KeypressHandler = (time: number, keyName: string) => {
       posX = (posX + 1) % BOARD_WIDTH;
       break;
     case 'escape':
-      terminalGameIo.exit();
+      instance.exit();
       break;
   }
 
-  frameHandler(time);
+  frameHandler(instance);
 };
 
-const frameHandler: FrameHandler = (time: number) => {
+const frameHandler: FrameHandler = (instance: ITerminalGameIo) => {
   let frameData = '';
 
   for (let y = 0; y < BOARD_HEIGHT; y++) {
@@ -45,12 +46,12 @@ const frameHandler: FrameHandler = (time: number) => {
     }
   }
 
-  terminalGameIo.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
-  terminalGameIo.write('Frame: ' + (frameNumber++) + '\n');
-  terminalGameIo.write('Time: ' + time.toFixed(3) + 's\n');
-  terminalGameIo.write('Last key name: ' + lastKeyName + '                \n\n');
-  terminalGameIo.write('Use arrows to move.\n');
-  terminalGameIo.write('Press Escape to exit...\n');
+  instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
+  instance.write('Frame: ' + (frameNumber++) + '\n');
+  instance.write('Time: ' + instance.getTime().toFixed(3) + 's\n');
+  instance.write('Last key name: ' + lastKeyName + '                \n\n');
+  instance.write('Use arrows to move.\n');
+  instance.write('Press Escape to exit...\n');
 };
 
 terminalGameIo = new TerminalGameIo(keypressHandler, frameHandler, FPS);

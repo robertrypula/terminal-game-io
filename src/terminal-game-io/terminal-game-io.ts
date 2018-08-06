@@ -1,16 +1,16 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula/terminal-game-io
 
-import * as process from 'process';
-import * as readline from 'readline';
+import { process, emitKeypressEvents } from '../node-dependencies/node-dependencies';
+import { ITerminalGameIo } from './terminal-game-io.interface';
 
 const CSI = String.fromCharCode(0x1b) + '[';
 const isBrowser = () => typeof document !== 'undefined';
 const getDomElement = () => document.getElementById('terminal-game-io');
 
-export type KeypressHandler = (time: number, keyName: string) => void;
-export type FrameHandler = (time: number) => void;
+export type KeypressHandler = (instance: TerminalGameIo, keyName: string) => void;
+export type FrameHandler = (instance: TerminalGameIo) => void;
 
-export class TerminalGameIo {
+export class TerminalGameIo implements ITerminalGameIo {
   protected intervalId: any;
   protected startTime: number;
   protected frameDuration: number;
@@ -27,7 +27,7 @@ export class TerminalGameIo {
     this.frameDuration = Math.round(1000 / fps);
     this.startTime = new Date().getTime();
     this.initialize();
-    setTimeout(() => this.frameHandler(this.getTime()), 0);
+    this.frameHandler(this);
   }
 
   public drawFrame(frameData: string, width: number, height: number): void {
@@ -73,8 +73,11 @@ export class TerminalGameIo {
     }
   }
 
-  protected keydownEventListener = (e: KeyboardEvent) => {
-    this.keypressHandler(this.getTime(), e.key);
+  public getTime(): number {
+    const now = new Date().getTime();
+    const difference = now - this.startTime;
+
+    return difference / 1000;
   }
 
   protected clear(): void {
@@ -91,24 +94,21 @@ export class TerminalGameIo {
     }
   }
 
-  protected getTime(): number {
-    const now = new Date().getTime();
-    const difference = now - this.startTime;
-
-    return difference / 1000;
-  }
-
   protected initialize() {
     // TODO remove condition by spliting code into two classes
-    if (readline) {
-      readline.emitKeypressEvents(process.stdin);
+    if (emitKeypressEvents) {
+      emitKeypressEvents(process.stdin);
       process.stdin.setRawMode(true);
       process.stdin.on('keypress', (str, key) => {
-        this.keypressHandler(this.getTime(), key.name);
+        this.keypressHandler(this, key.name);
       });
     } else if (isBrowser()) {
       document.addEventListener('keydown', this.keydownEventListener);
     }
-    this.intervalId = setInterval(() => this.frameHandler(this.getTime()), this.frameDuration);
+    this.intervalId = setInterval(() => this.frameHandler(this), this.frameDuration);
+  }
+
+  protected keydownEventListener = (e: KeyboardEvent) => {
+    this.keypressHandler(this, e.key);
   }
 }
