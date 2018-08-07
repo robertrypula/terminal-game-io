@@ -7,8 +7,10 @@ describe('TerminalGameIoCommon', () => {
   it('should create proper instance', () => {
     const terminalGameIoCommon = new TerminalGameIoCommon({
       fps: 5,
+      /*tslint:disable*/
       frameHandler: (instance: ITerminalGameIo) => { },
       keypressHandler: (instance: ITerminalGameIo, keyName: string) => { }
+      /*tslint:enable*/
     });
 
     expect(terminalGameIoCommon).toBeTruthy();

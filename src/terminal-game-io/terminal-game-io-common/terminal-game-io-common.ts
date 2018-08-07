@@ -1,7 +1,15 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula/terminal-game-io
 
-import { process, emitKeypressEvents } from '../../node-dependencies/node-dependencies';
-import { FrameHandler, ITerminalGameIo, ITerminalGameIoOptions, KeypressHandler } from '../terminal-game-io.interface';
+import {
+  emitKeypressEvents,
+  process
+} from '../../node-dependencies/node-dependencies';
+import {
+  FrameHandler,
+  ITerminalGameIo,
+  ITerminalGameIoOptions,
+  KeypressHandler
+} from '../terminal-game-io.interface';
 
 const CSI = String.fromCharCode(0x1b) + '[';
 const isBrowser = () => typeof document !== 'undefined';

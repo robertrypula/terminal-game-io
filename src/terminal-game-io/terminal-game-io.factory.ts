@@ -1,7 +1,11 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula/terminal-game-io
 
-import { ITerminalGameIoOptions, ITerminalGameIoStatic, TerminalGameIoFactory } from './terminal-game-io.interface';
 import { TerminalGameIoCommon } from './terminal-game-io-common/terminal-game-io-common';
+import {
+  ITerminalGameIoOptions,
+  ITerminalGameIoStatic,
+  TerminalGameIoFactory
+} from './terminal-game-io.interface';
 
 export const createTerminalGameIo: TerminalGameIoFactory = (
   terminalGameIoOptions: ITerminalGameIoOptions
