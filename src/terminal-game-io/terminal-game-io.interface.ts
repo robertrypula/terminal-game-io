@@ -8,6 +8,7 @@ export interface ITerminalGameIo {
 }
 
 export interface ITerminalGameIoOptions {
+  domElementId?: string;
   fps: number;
   frameHandler: FrameHandler;
   keypressHandler: KeypressHandler;

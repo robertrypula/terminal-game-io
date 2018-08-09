@@ -20,6 +20,15 @@ If you like to share your games directly in the browser don't worry - simple 'we
 npm install terminal-game-io --save
 ```
 
+## TODO
+
+- export env utils (isBrowser, isNode)
+- add ability to change DOM element id
+- split main class into two (one for node, one for browser)
+- write unit tests
+- use requestAnimationFrame
+- normalize keyNames, currently there is a mismatch between node and browser
+
 ## Example - NodeJs, pure JavaScript
 
 ```javascript

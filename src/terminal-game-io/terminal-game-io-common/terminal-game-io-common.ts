@@ -2,8 +2,10 @@
 
 import {
   emitKeypressEvents,
+  getElementById,
+  isBrowser,
   process
-} from '../../node-dependencies/node-dependencies';
+} from '../../env-utils/env-utils';
 import {
   FrameHandler,
   ITerminalGameIo,
@@ -12,8 +14,8 @@ import {
 } from '../terminal-game-io.interface';
 
 const CSI = String.fromCharCode(0x1b) + '[';
-const isBrowser = () => typeof document !== 'undefined';
-const getDomElement = () => document.getElementById('root');
+
+const getDomElement = (): HTMLElement => getElementById('root');
 
 export class TerminalGameIoCommon implements ITerminalGameIo {
   protected frameDuration: number;
@@ -55,7 +57,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
     // TODO remove condition by splitting code into two classes
     if (process) {
       process.stdout.write(value);
-    } else if (isBrowser()) {
+    } else if (isBrowser) {
       domElement = getDomElement();
       if (domElement) {
         domElement.innerHTML = domElement.innerHTML + value;
@@ -69,7 +71,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
     // TODO remove condition by splitting code into two classes
     if (process) {
       process.exit();
-    } else if (isBrowser()) {
+    } else if (isBrowser) {
       document.removeEventListener('keydown', this.keydownEventListener);
     }
   }
@@ -87,7 +89,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
     // TODO remove condition by splitting code into two classes
     if (process) {
       process.stdout.write(CSI + 1 + ';' + 1 + 'H');
-    } else if (isBrowser()) {
+    } else if (isBrowser) {
       domElement = getDomElement();
       if (domElement) {
         domElement.innerHTML = '';
@@ -103,7 +105,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
       process.stdin.on('keypress', (str, key) => {
         this.keypressHandler(this, key.name);
       });
-    } else if (isBrowser()) {
+    } else if (isBrowser) {
       document.addEventListener('keydown', this.keydownEventListener);
     }
     this.intervalId = setInterval(() => this.frameHandler(this), this.frameDuration);
