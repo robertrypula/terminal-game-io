@@ -15,9 +15,11 @@ import {
 
 const CSI = String.fromCharCode(0x1b) + '[';
 
-const getDomElement = (): HTMLElement => getElementById('root');
+// TODO add caching
+const getDomElement = (id: string): HTMLElement => getElementById(id);
 
 export class TerminalGameIoCommon implements ITerminalGameIo {
+  protected domElementId: string;
   protected frameDuration: number;
   protected frameHandler: FrameHandler;
   protected intervalId: any;
@@ -25,10 +27,14 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
   protected startTime: number;
 
   constructor(terminalGameIoOptions: ITerminalGameIoOptions) {
+    this.domElementId = terminalGameIoOptions.domElementId
+      ? terminalGameIoOptions.domElementId
+      : 'root';
+    this.frameDuration = Math.round(1000 / terminalGameIoOptions.fps);
     this.frameHandler = terminalGameIoOptions.frameHandler;
     this.keypressHandler = terminalGameIoOptions.keypressHandler;
-    this.frameDuration = Math.round(1000 / terminalGameIoOptions.fps);
     this.startTime = new Date().getTime();
+
     this.initialize();
     this.frameHandler(this);
   }
@@ -58,7 +64,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
     if (process) {
       process.stdout.write(value);
     } else if (isBrowser) {
-      domElement = getDomElement();
+      domElement = getDomElement(this.domElementId);
       if (domElement) {
         domElement.innerHTML = domElement.innerHTML + value;
       }
@@ -90,7 +96,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
     if (process) {
       process.stdout.write(CSI + 1 + ';' + 1 + 'H');
     } else if (isBrowser) {
-      domElement = getDomElement();
+      domElement = getDomElement(this.domElementId);
       if (domElement) {
         domElement.innerHTML = '';
       }

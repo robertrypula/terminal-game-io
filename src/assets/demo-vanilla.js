@@ -1,23 +1,20 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula/terminal-game-io
 
-import {
-  createTerminalGameIo,
-  FrameHandler,
-  ITerminalGameIo,
-  KeypressHandler
-} from './main';     // in your application replace it to: } from 'terminal-game-io';
+const TerminalGameIo =
+  require('./terminal-game-io-v2.0.0.js'); // in your application replace it to: require('terminal-game-io');
+const createTerminalGameIo = TerminalGameIo.createTerminalGameIo;
 
 const FPS = 5;
 const BOARD_WIDTH = 40;
 const BOARD_HEIGHT = 12;
 
-let terminalGameIo: ITerminalGameIo;
+let terminalGameIo;
 let lastKeyName = '';
 let posX = Math.round(BOARD_WIDTH / 2);
 let posY = Math.round(BOARD_HEIGHT / 2);
 let frameNumber = 0;
 
-const frameHandler: FrameHandler = (instance: ITerminalGameIo) => {
+const frameHandler = (instance) => {
   let frameData = '';
 
   for (let y = 0; y < BOARD_HEIGHT; y++) {
@@ -34,7 +31,7 @@ const frameHandler: FrameHandler = (instance: ITerminalGameIo) => {
   instance.write('Press Escape to exit...\n');
 };
 
-const keypressHandler: KeypressHandler = (instance: ITerminalGameIo, keyName: string) => {
+const keypressHandler = (instance, keyName) => {
   lastKeyName = keyName;
 
   switch (keyName) {

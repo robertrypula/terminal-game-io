@@ -1,11 +1,14 @@
 const webpack = require('webpack');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackExcludeAssetsPlugin = require('html-webpack-exclude-assets-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WrapperPlugin = require('wrapper-webpack-plugin');
 const { readFileSync } = require('fs');
 const packageJson = require('./package.json');
 const packageName = packageJson.name;
 const libraryName = getLibraryName(packageName);
-const versionFileContent = readFileSync(path.resolve(__dirname) + '/src/version.ts', 'utf8');
+const versionFileContent = readFileSync(path.resolve(__dirname) + '/src/lib/version.ts', 'utf8');
 const version = getVersion(versionFileContent);
 const licence = readFileSync(path.resolve(__dirname) + '/LICENCE');
 
@@ -53,6 +56,15 @@ function getConfig(env) {
       readline: 'readline'
     },
     plugins: [
+      new HtmlWebpackPlugin({
+        // inject: 'body',
+        filename: 'demo-web.html',
+        hash: true,
+        minify: false,
+        template: './src/assets/demo-web-template.html',
+        excludeAssets: [/demo.*.js/]
+      }),
+      new HtmlWebpackExcludeAssetsPlugin(),       // https://stackoverflow.com/a/50830422
       new webpack.DefinePlugin({
         DEVELOPMENT: JSON.stringify(env.DEVELOPMENT === true),
         PRODUCTION: JSON.stringify(env.PRODUCTION === true)
@@ -67,7 +79,7 @@ function getConfig(env) {
 function fillDev(config) {
   config.mode = 'development';
   config.entry = {
-    [`${packageName}-v${version}`]: './src/index.ts',
+    [`${packageName}-v${version}`]: './src/main.ts',
     [`demo`]: './src/demo.ts'
   };
 
@@ -79,7 +91,7 @@ function fillDev(config) {
     compress: true,
     port: 8000,
     hot: false,
-    openPage: 'demo-web/index.html',
+    openPage: 'dist/demo-web.html',
     overlay: {
       warnings: true,
       errors: true
@@ -90,10 +102,22 @@ function fillDev(config) {
 function fillProd(config) {
   config.mode = 'production';
   config.entry = {
-    [`${packageName}-v${version}`]: './src/index.ts'
+    [`${packageName}-v${version}`]: './src/main.ts'
   };
 
   config.devtool = 'source-map';
+
+  config.plugins.push(
+    new CopyWebpackPlugin(
+      [
+        {
+          from: path.resolve(__dirname) + '/src/assets/demo-vanilla.js',
+          to: path.resolve(__dirname) + '/dist/demo-vanilla.js',
+          toType: 'file'
+        }
+      ]
+    )
+  );
 }
 
 module.exports = (env) => {
