@@ -14,6 +14,8 @@ If you like to share your games directly in the browser don't worry - simple 'we
 
 [![Terminal example](https://cdn.rypula.pl/terminal-game-io/web-browser.gif)](https://cdn.rypula.pl/terminal-game-io/web-browser.gif)
 
+Web example available [here](http://rypula.pl/terminal-game-io/demo-web.html)
+
 ## Installation
 
 ```
@@ -24,7 +26,7 @@ npm install terminal-game-io --save
 
 - [DONE] export env utils (isBrowser, isNode)
 - [DONE] add ability to change DOM element id
-- add ability to trigger keypress handler from other sources (mouse click, swipe event)
+- [DONE] add ability to trigger keypress handler from other sources (mouse click, swipe event)
 - split main class into two (one for node, one for browser)
 - write unit tests
 - use requestAnimationFrame
