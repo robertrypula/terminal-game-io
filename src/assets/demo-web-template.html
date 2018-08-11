@@ -3,9 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <title>Terminal Game UI - web demo</title>
+  <style>
+    .mobile-device-buttons {
+      position: fixed;
+      display: block;
+      width: 33%;
+      height: 50%;
+    }
+    .mobile-device-buttons:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body onLoad="run()">
   <pre id="root"></pre>
+
+  <a
+    href="javascript:void(0)" onClick="handleClick(event, 'ClickDown')"
+    class="mobile-device-buttons" style="top: 50%; left: 33%;"
+  ></a>
+  <a
+    href="javascript:void(0)" onClick="handleClick(event, 'ClickUp')"
+    class="mobile-device-buttons" style="top: 0; left: 33%;"
+  ></a>
+  <a
+    href="javascript:void(0)" onClick="handleClick(event, 'ClickLeft')"
+    class="mobile-device-buttons" style="top: 50%; left: 0;"
+  ></a>
+  <a
+    href="javascript:void(0)" onClick="handleClick(event, 'ClickRight')"
+    class="mobile-device-buttons" style="top: 50%; left: 66%;"
+  ></a>
 
   <script>
     var FPS = 5;
@@ -38,25 +67,41 @@
     function keypressHandler(instance, keyName) {
       lastKeyName = keyName;
 
+      frameHandler(instance);
+
       switch (keyName) {
+        case 'Down':
         case 'ArrowDown':
+        case 'ClickDown':
           posY = (posY + 1) % BOARD_HEIGHT;
           break;
+        case 'Up':
         case 'ArrowUp':
+        case 'ClickUp':
           posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
           break;
+        case 'Left':
         case 'ArrowLeft':
+        case 'ClickLeft':
           posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
           break;
+        case 'Right':
         case 'ArrowRight':
+        case 'ClickRight':
           posX = (posX + 1) % BOARD_WIDTH;
           break;
+        case 'Esc':
         case 'Escape':
           instance.exit();
           break;
       }
+    }
 
-      frameHandler(instance);
+    function handleClick(event, keyName) {
+      event.preventDefault();
+      if (terminalGameIo) {
+        terminalGameIo.triggerKeypress(keyName);
+      }
     }
 
     function run() {

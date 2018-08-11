@@ -25,6 +25,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
   protected intervalId: any;
   protected keypressHandler: KeypressHandler;
   protected startTime: number;
+  protected active: boolean;
 
   constructor(terminalGameIoOptions: ITerminalGameIoOptions) {
     this.domElementId = terminalGameIoOptions.domElementId
@@ -80,6 +81,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
     } else if (isBrowser) {
       document.removeEventListener('keydown', this.keydownEventListener);
     }
+    this.active = false;
   }
 
   public getTime(): number {
@@ -87,6 +89,12 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
     const difference = now - this.startTime;
 
     return difference / 1000;
+  }
+
+  public triggerKeypress(keyName: string) {
+    if (this.active) {
+      this.keypressHandler(this, keyName);
+    }
   }
 
   protected clear(): void {
@@ -115,6 +123,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
       document.addEventListener('keydown', this.keydownEventListener);
     }
     this.intervalId = setInterval(() => this.frameHandler(this), this.frameDuration);
+    this.active = true;
   }
 
   protected keydownEventListener = (e: KeyboardEvent) => {
