@@ -1,7 +1,7 @@
 {
   "name": "terminal-game-io",
-  "version": "2.0.0",
-  "description": "Wrapper for NodeJs that allows to write simple terminal games. It supports basic output (ASCII 'frame') and input (keypress events).",
+  "version": "2.1.0-rc",
+  "description": "It's never been easier to start writing terminal games in NodeJs. This package handles for you basic input (keyboard events) and output (ASCII 'frame'). If you like to share your games directly in the browser don't worry - simple 'web terminal' emulator is supported too.",
   "keywords": [
     "terminal games",
     "terminal render frame",
@@ -11,8 +11,7 @@
   "author": "Robert Rypuła",
   "license": "MIT",
   "scripts": {
-    "_": "npm run test && npm run lint && npm run lint:tsfmt:verify && ",
-    "build": "npm run clean && webpack --env.PRODUCTION",
+    "build": "npm run clean && npm run test && npm run lint && npm run lint:tsfmt:verify && webpack --env.PRODUCTION",
     "demo": "npm run clean && webpack --env.DEVELOPMENT && node dist/demo.js",
     "demo-web": "npm run clean && webpack-dev-server --env.DEVELOPMENT --open",
     "test": "jest --coverage",
@@ -25,8 +24,8 @@
     "npm-check": "npm-check --skip-unused",
     "npm-check:u": "npm-check --skip-unused -u"
   },
-  "main": "dist/terminal-game-io-v2.0.0.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/terminal-game-io-v2.1.0-rc.js",
+  "types": "dist/main.d.ts",
   "files": [
     "dist/"
   ],

@@ -31,8 +31,11 @@ npm install terminal-game-io --save
 
 ## Example - NodeJs, pure JavaScript
 
+Just follow the installation instruction and create `test.js` file with the content below. At the end execute the `node test.js` command.
+
 ```javascript
-const createTerminalGameIo = require('terminal-game-io').createTerminalGameIo;
+const TerminalGameIo = require('terminal-game-io');
+const createTerminalGameIo = TerminalGameIo.createTerminalGameIo;
 
 const FPS = 5;
 const BOARD_WIDTH = 40;
@@ -100,7 +103,7 @@ import {
   FrameHandler,
   ITerminalGameIo,
   KeypressHandler
-} from 'terminal-game-io';
+} from 'terminal-game-io'; 
 
 const FPS = 5;
 const BOARD_WIDTH = 40;
@@ -162,33 +165,34 @@ terminalGameIo = createTerminalGameIo({
 
 ## Example - 'web terminal' in your browser in pure JavaScript
 
+Running in browser is also easy. Just create `index.html` with the content below.
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Terminal Game UI - web demo</title>
-  <script src="https://unpkg.com/terminal-game-io"></script>
 </head>
-<body>
+<body onLoad="run()">
   <pre id="root"></pre>
 
   <script>
-    const FPS = 5;
-    const BOARD_WIDTH = 40;
-    const BOARD_HEIGHT = 12;
+    var FPS = 5;
+    var BOARD_WIDTH = 40;
+    var BOARD_HEIGHT = 12;
 
-    let terminalGameIo;
-    let lastKeyName = '';
-    let posX = Math.round(BOARD_WIDTH / 2);
-    let posY = Math.round(BOARD_HEIGHT / 2);
-    let frameNumber = 0;
+    var terminalGameIo;
+    var lastKeyName = '';
+    var posX = Math.round(BOARD_WIDTH / 2);
+    var posY = Math.round(BOARD_HEIGHT / 2);
+    var frameNumber = 0;
 
-    const frameHandler = (instance) => {
-      let frameData = '';
+    function frameHandler(instance) {
+      var frameData = '';
 
-      for (let y = 0; y < BOARD_HEIGHT; y++) {
-        for (let x = 0; x < BOARD_WIDTH; x++) {
+      for (var y = 0; y < BOARD_HEIGHT; y++) {
+        for (var x = 0; x < BOARD_WIDTH; x++) {
           frameData += (posX === x && posY === y) ? '@' : '.';
         }
       }
@@ -199,9 +203,9 @@ terminalGameIo = createTerminalGameIo({
       instance.write('Last key name: ' + lastKeyName + '\n\n');
       instance.write('Use arrows to move.\n');
       instance.write('Press Escape to exit...\n');
-    };
+    }
 
-    const keypressHandler = (instance, keyName) => {
+    function keypressHandler(instance, keyName) {
       lastKeyName = keyName;
 
       switch (keyName) {
@@ -223,15 +227,18 @@ terminalGameIo = createTerminalGameIo({
       }
 
       frameHandler(instance);
-    };
+    }
 
-    terminalGameIo = new TerminalGameIo.createTerminalGameIo({
-      fps: FPS,
-      frameHandler: frameHandler,
-      keypressHandler: keypressHandler
-    });
+    function run() {
+      terminalGameIo = new TerminalGameIo.createTerminalGameIo({
+        // domElementId: 'my-custom-id',     // default: 'root'
+        fps: FPS,
+        frameHandler: frameHandler,
+        keypressHandler: keypressHandler
+      });
+    }
   </script>
-</body>
+  <script src="https://unpkg.com/terminal-game-io"></script>
 </html>
 ```
 

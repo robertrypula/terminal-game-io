@@ -57,7 +57,6 @@ function getConfig(env) {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        // inject: 'body',
         filename: 'demo-web.html',
         hash: true,
         minify: false,
