@@ -11,7 +11,7 @@
   "author": "Robert Rypuła",
   "license": "MIT",
   "scripts": {
-    "build": "npm run clean && npm run test && npm run lint && npm run lint:tsfmt:verify && webpack --env.PRODUCTION",
+    "build": "npm run clean && npm run test && npm run lint && npm run lint:tsfmt:verify && webpack --env.PRODUCTION && rimraf dist/demo.d.ts",
     "demo": "npm run clean && webpack --env.DEVELOPMENT && node dist/demo.js",
     "demo-web": "npm run clean && webpack-dev-server --env.DEVELOPMENT --open",
     "test": "jest --coverage",

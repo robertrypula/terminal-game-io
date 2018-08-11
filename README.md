@@ -22,8 +22,9 @@ npm install terminal-game-io --save
 
 ## TODO
 
-- export env utils (isBrowser, isNode)
-- add ability to change DOM element id
+- [DONE] export env utils (isBrowser, isNode)
+- [DONE] add ability to change DOM element id
+- add ability to trigger keypress handler from other sources (mouse click, swipe event)
 - split main class into two (one for node, one for browser)
 - write unit tests
 - use requestAnimationFrame

@@ -68,7 +68,7 @@ function getConfig(env) {
         DEVELOPMENT: JSON.stringify(env.DEVELOPMENT === true),
         PRODUCTION: JSON.stringify(env.PRODUCTION === true)
       }),
-      new WrapperPlugin({
+      new WrapperPlugin({    // TODO: on production build it's not working, all comments are removed
         header: '/*\n' + licence + '*/\n\n'
       })
     ]
