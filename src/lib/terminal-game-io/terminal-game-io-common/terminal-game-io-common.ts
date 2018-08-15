@@ -91,7 +91,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
     return difference / 1000;
   }
 
-  public triggerKeypress(keyName: string) {
+  public triggerKeypress(keyName: string): void {
     if (this.active) {
       this.keypressHandler(this, keyName);
     }

@@ -278,7 +278,7 @@ Running in browser is also easy. Just create `index.html` with the content below
     }
 
     function run() {
-      terminalGameIo = new TerminalGameIo.createTerminalGameIo({
+      terminalGameIo = TerminalGameIo.createTerminalGameIo({
         // domElementId: 'my-custom-id',     // default: 'root'
         fps: FPS,
         frameHandler: frameHandler,

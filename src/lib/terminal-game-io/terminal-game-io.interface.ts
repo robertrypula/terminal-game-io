@@ -4,6 +4,7 @@ export interface ITerminalGameIo {
   drawFrame(frameData: string, width: number, height: number): void;
   exit(): void;
   getTime(): number;
+  triggerKeypress(keyName: string): void;
   write(value: string): void;
 }
 
