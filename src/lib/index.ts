@@ -1,4 +1,4 @@
-// Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula/terminal-game-io
+// Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
 export * from './env-utils/env-utils';
 export * from './terminal-game-io/terminal-game-io.factory';

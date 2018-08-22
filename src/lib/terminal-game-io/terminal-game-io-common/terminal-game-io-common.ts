@@ -1,4 +1,4 @@
-// Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula/terminal-game-io
+// Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
 import * as fromEnvUtils from '../../env-utils/env-utils';
 import {
