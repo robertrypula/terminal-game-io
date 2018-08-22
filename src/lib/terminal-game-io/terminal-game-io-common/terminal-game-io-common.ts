@@ -1,11 +1,6 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula/terminal-game-io
 
-import {
-  emitKeypressEvents,
-  getElementById,
-  isBrowser,
-  process
-} from '../../env-utils/env-utils';
+import * as fromEnvUtils from '../../env-utils/env-utils';
 import {
   FrameHandler,
   ITerminalGameIo,
@@ -14,9 +9,6 @@ import {
 } from '../terminal-game-io.interface';
 
 const CSI = String.fromCharCode(0x1b) + '[';
-
-// TODO add caching
-const getDomElement = (id: string): HTMLElement => getElementById(id);
 
 export class TerminalGameIoCommon implements ITerminalGameIo {
   protected domElementId: string;
@@ -62,10 +54,10 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
     let domElement;
 
     // TODO remove condition by splitting code into two classes
-    if (process) {
-      process.stdout.write(value);
-    } else if (isBrowser) {
-      domElement = getDomElement(this.domElementId);
+    if (fromEnvUtils.process) {
+      fromEnvUtils.process.stdout.write(value);
+    } else if (fromEnvUtils.isBrowser) {
+      domElement = fromEnvUtils.getElementById(this.domElementId);
       if (domElement) {
         domElement.innerHTML = domElement.innerHTML + value;
       }
@@ -76,9 +68,9 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
     clearInterval(this.intervalId);
 
     // TODO remove condition by splitting code into two classes
-    if (process) {
-      process.exit();
-    } else if (isBrowser) {
+    if (fromEnvUtils.process) {
+      fromEnvUtils.process.exit();
+    } else if (fromEnvUtils.isBrowser) {
       document.removeEventListener('keydown', this.keydownEventListener);
     }
     this.active = false;
@@ -101,10 +93,10 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
     let domElement;
 
     // TODO remove condition by splitting code into two classes
-    if (process) {
-      process.stdout.write(CSI + 1 + ';' + 1 + 'H');
-    } else if (isBrowser) {
-      domElement = getDomElement(this.domElementId);
+    if (fromEnvUtils.process) {
+      fromEnvUtils.process.stdout.write(CSI + 1 + ';' + 1 + 'H');
+    } else if (fromEnvUtils.isBrowser) {
+      domElement = fromEnvUtils.getElementById(this.domElementId);
       if (domElement) {
         domElement.innerHTML = '';
       }
@@ -113,13 +105,13 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
 
   protected initialize() {
     // TODO remove condition by splitting code into two classes
-    if (emitKeypressEvents) {
-      emitKeypressEvents(process.stdin);
-      process.stdin.setRawMode(true);
-      process.stdin.on('keypress', (str, key) => {
+    if (fromEnvUtils.emitKeypressEvents) {
+      fromEnvUtils.emitKeypressEvents(fromEnvUtils.process.stdin);
+      fromEnvUtils.process.stdin.setRawMode(true);
+      fromEnvUtils.process.stdin.on('keypress', (str, key) => {
         this.keypressHandler(this, key.name);
       });
-    } else if (isBrowser) {
+    } else if (fromEnvUtils.isBrowser) {
       document.addEventListener('keydown', this.keydownEventListener);
     }
     this.intervalId = setInterval(() => this.frameHandler(this), this.frameDuration);

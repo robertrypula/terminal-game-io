@@ -8,18 +8,18 @@
 
 It's never been easier to start writing terminal games in NodeJs. This package handles for you basic input (keyboard events) and output (ASCII 'frame').
 
-[![Terminal example](https://cdn.rypula.pl/terminal-game-io/terminal.gif)](https://cdn.rypula.pl/terminal-game-io/terminal.gif) 
+[![Terminal example](https://cdn.rypula.pl/terminal-game-io/demo-node.gif)](https://cdn.rypula.pl/terminal-game-io/demo-node.gif) 
 
-If you like to share your games directly in the browser don't worry - simple 'web terminal' emulator is supported too!
+If you like to share your games directly in the browser don't worry - simple 'browser terminal' emulator is supported too!
 
-[![Terminal example](https://cdn.rypula.pl/terminal-game-io/web-browser.gif)](https://cdn.rypula.pl/terminal-game-io/web-browser.gif)
+[![Terminal example](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)
 
-Web example available [here](http://rypula.pl/terminal-game-io/demo-web.html)
+Web example available [here](http://rypula.pl/terminal-game-io/demo-browser.html)
 
 ## Installation
 
 ```
-npm install terminal-game-io --save
+npm install terminal-game-io
 ```
 
 ## TODO
@@ -27,6 +27,7 @@ npm install terminal-game-io --save
 - [DONE] export env utils (isBrowser, isNode)
 - [DONE] add ability to change DOM element id
 - [DONE] add ability to trigger keypress handler from other sources (mouse click, swipe event)
+- [DONE] fix error with node environment detection
 - split main class into two (one for node, one for browser)
 - write unit tests
 - use requestAnimationFrame
@@ -175,7 +176,7 @@ Running in browser is also easy. Just create `index.html` with the content below
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Terminal Game UI - web demo</title>
+  <title>Terminal Game UI</title>
   <style>
     .mobile-device-buttons {
       position: fixed;
@@ -297,13 +298,13 @@ git clone https://github.com/robertrypula/terminal-game-io.git
 cd terminal-game-io
 npm install
 
-npm run demo
+npm run dev-node
 ```
 
-This library supports also web mode:
+This library can run also in the browser:
 
 ```
-npm run demo-web
+npm run dev-browser
 ```
 
 ## Licence

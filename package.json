@@ -1,7 +1,7 @@
 {
   "name": "terminal-game-io",
-  "version": "2.1.1",
-  "description": "It's never been easier to start writing terminal games in NodeJs. This package handles for you basic input (keyboard events) and output (ASCII 'frame'). If you like to share your games directly in the browser don't worry - simple 'web terminal' emulator is supported too.",
+  "version": "2.1.2-rc",
+  "description": "It's never been easier to start writing terminal games in NodeJs. This package handles for you basic input (keyboard events) and output (ASCII 'frame'). If you like to share your games directly in the browser don't worry - simple 'browser terminal' emulator is supported too.",
   "keywords": [
     "terminal games",
     "terminal render frame",
@@ -11,9 +11,9 @@
   "author": "Robert Rypuła",
   "license": "MIT",
   "scripts": {
-    "build": "npm run clean && npm run test && npm run lint && npm run lint:tsfmt:verify && webpack --env.PRODUCTION && rimraf dist/demo.d.ts",
-    "demo": "npm run clean && webpack --env.DEVELOPMENT && node dist/demo.js",
-    "demo-web": "npm run clean && webpack-dev-server --env.DEVELOPMENT --open",
+    "build": "npm run clean && npm run test && npm run lint && npm run lint:tsfmt:verify && webpack --env.PRODUCTION && rimraf dist/dev.d.ts",
+    "dev-node": "npm run clean && webpack --env.DEVELOPMENT && node dist/dev.js",
+    "dev-browser": "npm run clean && webpack-dev-server --env.DEVELOPMENT --open",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
@@ -24,7 +24,7 @@
     "npm-check": "npm-check --skip-unused",
     "npm-check:u": "npm-check --skip-unused -u"
   },
-  "main": "dist/terminal-game-io-v2.1.1.js",
+  "main": "dist/terminal-game-io-v2.1.2-rc.js",
   "types": "dist/main.d.ts",
   "files": [
     "dist/"

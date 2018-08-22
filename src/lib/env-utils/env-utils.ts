@@ -9,9 +9,8 @@ isNode && isBrowser based on:
 - https://github.com/foo123/asynchronous.js/blob/0.5.1/asynchronous.js#L40
 - https://stackoverflow.com/a/48536881
 */
-export const isNode = typeof nodeProcess !== 'undefined' &&
-  nodeProcess.versions !== null &&
-  nodeProcess.versions.node !== null;
+export const isNode = typeof global !== 'undefined' &&
+  toString.call(global) === '[object global]';
 
 export const isBrowser = !isNode &&
   typeof navigator !== 'undefined' &&
