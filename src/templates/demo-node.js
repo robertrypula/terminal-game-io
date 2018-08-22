@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
 const TerminalGameIo =
-  require('./terminal-game-io-v2.1.2-rc.js'); // in your application replace it to: require('terminal-game-io');
+  require('./terminal-game-io-v2.1.2.js'); // in your application replace it to: require('terminal-game-io');
 const createTerminalGameIo = TerminalGameIo.createTerminalGameIo;
 
 const FPS = 5;

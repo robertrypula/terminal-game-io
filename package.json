@@ -1,6 +1,6 @@
 {
   "name": "terminal-game-io",
-  "version": "2.1.2-rc",
+  "version": "2.1.2",
   "description": "It's never been easier to start writing terminal games in NodeJs. This package handles for you basic input (keyboard events) and output (ASCII 'frame'). If you like to share your games directly in the browser don't worry - simple 'browser terminal' emulator is supported too.",
   "keywords": [
     "terminal games",
@@ -24,7 +24,7 @@
     "npm-check": "npm-check --skip-unused",
     "npm-check:u": "npm-check --skip-unused -u"
   },
-  "main": "dist/terminal-game-io-v2.1.2-rc.js",
+  "main": "dist/terminal-game-io-v2.1.2.js",
   "types": "dist/main.d.ts",
   "files": [
     "dist/"
