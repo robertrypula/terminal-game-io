@@ -1,8 +1,5 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
-import * as nodeProcess from 'process';
-import * as nodeReadline from 'readline';
-
 /*
 isNode && isBrowser based on:
 - https://stackoverflow.com/a/33697246
@@ -17,22 +14,58 @@ export const isBrowser = !isNode &&
   typeof document !== 'undefined' &&
   typeof window !== 'undefined';
 
+declare var document: Document;
+
 export const getElementById = (id: string): HTMLElement => {
   return isBrowser
     ? document.getElementById(id)
     : null;
 };
 
-export const argv: string[] = isNode
-  ? nodeProcess.argv
-  : [];
+export const argv: string[] = isNode ? global.process.argv : [];
 
-export const process: NodeJS.Process = isNode ? nodeProcess : null;
+export const process: NodeJS.Process = isNode ? global.process : null;
+
+// let nodeEmitKeypressEvents: any;
+//
+// if (isNode) {
+//   try {
+//     nodeEmitKeypressEvents = require('readline').emitKeypressEvents;
+//   } catch (e) {
+//     nodeEmitKeypressEvents = null;
+//   }
+// }
 
 export type EmitKeypressEvents = (
-  stream: NodeJS.ReadableStream,
-  /*tslint:disable-next-line*/
-  _interface?: nodeReadline.ReadLine
+  stream: NodeJS.ReadableStream
 ) => void;
 
-export const emitKeypressEvents: EmitKeypressEvents = isNode ? nodeReadline.emitKeypressEvents : null;
+// Based on: https://github.com/nodejs/node/blob/master/lib/readline.js
+const emitKeypressEventsLocal = (stream: NodeJS.ReadableStream): void => {
+  function onData(b: Buffer) {
+
+    if (stream.listenerCount('keypress') > 0) {
+
+    } else {
+      // Nobody's watching anyway
+      stream.removeListener('data', onData);
+      stream.on('newListener', onNewListener);
+    }
+  }
+
+  function onNewListener(event: string) {
+    console.log('onNewListener', event);
+    if (event === 'keypress') {
+      stream.on('data', onData);
+      stream.removeListener('newListener', onNewListener);
+    }
+  }
+
+  if (stream.listenerCount('keypress') > 0) {
+    stream.on('data', onData);
+  } else {
+    stream.on('newListener', onNewListener);
+  }
+};
+
+export const emitKeypressEvents: EmitKeypressEvents = isNode ? emitKeypressEventsLocal : null;

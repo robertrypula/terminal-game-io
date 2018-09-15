@@ -55,7 +55,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
 
     // TODO remove condition by splitting code into two classes
     if (fromEnvUtils.process) {
-      fromEnvUtils.process.stdout.write(value);
+      // fromEnvUtils.process.stdout.write(value);
     } else if (fromEnvUtils.isBrowser) {
       domElement = fromEnvUtils.getElementById(this.domElementId);
       if (domElement) {
@@ -69,6 +69,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
 
     // TODO remove condition by splitting code into two classes
     if (fromEnvUtils.process) {
+      fromEnvUtils.process.stdin.removeAllListeners();
       fromEnvUtils.process.exit();
     } else if (fromEnvUtils.isBrowser) {
       document.removeEventListener('keydown', this.keydownEventListener);
@@ -94,7 +95,7 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
 
     // TODO remove condition by splitting code into two classes
     if (fromEnvUtils.process) {
-      fromEnvUtils.process.stdout.write(CSI + 1 + ';' + 1 + 'H');
+      // fromEnvUtils.process.stdout.write(CSI + 1 + ';' + 1 + 'H');
     } else if (fromEnvUtils.isBrowser) {
       domElement = fromEnvUtils.getElementById(this.domElementId);
       if (domElement) {
@@ -105,11 +106,29 @@ export class TerminalGameIoCommon implements ITerminalGameIo {
 
   protected initialize() {
     // TODO remove condition by splitting code into two classes
-    if (fromEnvUtils.emitKeypressEvents) {
-      fromEnvUtils.emitKeypressEvents(fromEnvUtils.process.stdin);
+    if (fromEnvUtils.isNode) {
       fromEnvUtils.process.stdin.setRawMode(true);
-      fromEnvUtils.process.stdin.on('keypress', (str, key) => {
-        this.keypressHandler(this, key.name);
+      fromEnvUtils.process.stdin.on('data', (buffer: Buffer) => {
+        const data: any[] = buffer.toJSON().data;
+        let keyName = '';
+
+        if (data.length === 1 && data[0] === 27) {
+          keyName = 'escape';
+        } else if (data.length === 1 && data[0] === 32) {
+          keyName = 'space';
+        } else if (data.length === 1 && data[0] === 13) {
+          keyName = 'enter';
+        } else if (data.length === 3 && data[0] === 27 && data[1] === 91 && data[2] === 65) {
+          keyName = 'up';
+        } else if (data.length === 3 && data[0] === 27 && data[1] === 91 && data[2] === 66) {
+          keyName = 'down';
+        } else if (data.length === 3 && data[0] === 27 && data[1] === 91 && data[2] === 67) {
+          keyName = 'right';
+        } else if (data.length === 3 && data[0] === 27 && data[1] === 91 && data[2] === 68) {
+          keyName = 'left';
+        }
+        console.log('onData', keyName, data);
+        this.keypressHandler(this, keyName);
       });
     } else if (fromEnvUtils.isBrowser) {
       document.addEventListener('keydown', this.keydownEventListener);

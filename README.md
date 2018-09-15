@@ -14,7 +14,7 @@ If you like to share your games directly in the browser don't worry - simple 'br
 
 [![Terminal example](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)
 
-Web example available [here](https://cdn.rypula.pl/terminal-game-io/v2.1.3-rc/demo-browser.html)
+Web example available [here](https://cdn.rypula.pl/terminal-game-io/v3.0.0-rc/demo-browser.html)
 
 Code example of the simple use case is available on [CodeSandbox.io](https://codesandbox.io/s/4m94kx0z9)
 

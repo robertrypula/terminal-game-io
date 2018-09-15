@@ -7,6 +7,14 @@ import {
   KeypressHandler
 } from './main';     // in your application replace it to: } from 'terminal-game-io';
 
+// import * as fromEnvUtil from './lib/env-utils/env-utils';
+//
+// console.log('isBrowser', fromEnvUtil.isBrowser);
+// console.log('isNode', fromEnvUtil.isNode);
+// console.log('argv', fromEnvUtil.argv);
+// console.log('emitKeypressEvents', fromEnvUtil.emitKeypressEvents + '');
+// console.log('process', fromEnvUtil.process + '');
+
 const FPS = 5;
 const BOARD_WIDTH = 40;
 const BOARD_HEIGHT = 12;
