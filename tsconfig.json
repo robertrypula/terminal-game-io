@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
-    "outDir": "./",
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "module": "commonjs",
-    "target": "es5",
-    "jsx": "react",
     "declaration": true,
-    "experimentalDecorators": true
+    "declarationDir": "./dist",
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "target": "es5"
   },
+  "exclude": [],
   "include": [
     "src/**/*"
-  ],
-  "exclude": []
+  ]
 }
