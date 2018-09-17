@@ -1,7 +1,8 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
 import { isBrowser, isNode } from '..';
-import { TerminalGameIoCommon } from './terminal-game-io-common/terminal-game-io-common';
+import { TerminalGameIoBrowser } from './terminal-game-io-browser/terminal-game-io-browser';
+import { TerminalGameIoNode } from './terminal-game-io-node/terminal-game-io-node';
 import {
   ITerminalGameIoOptions,
   ITerminalGameIoStatic,
@@ -9,18 +10,17 @@ import {
 } from './terminal-game-io.interface';
 
 export const createTerminalGameIo: TerminalGameIoFactory = (
-  terminalGameIoOptions: ITerminalGameIoOptions
+  options: ITerminalGameIoOptions
 ) => {
   let factoryClass: ITerminalGameIoStatic;
 
-  // TODO split into two classes - one for node, one for browser
   if (isNode) {
-    factoryClass = TerminalGameIoCommon;
+    factoryClass = TerminalGameIoNode;
   } else if (isBrowser) {
-    factoryClass = TerminalGameIoCommon;
+    factoryClass = TerminalGameIoBrowser;
   } else {
     throw new Error('Unable to create TerminalGameIo object due to environment detection problem.');
   }
 
-  return new factoryClass(terminalGameIoOptions);
+  return new factoryClass(options);
 };

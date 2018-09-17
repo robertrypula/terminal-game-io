@@ -36,11 +36,14 @@ export const process: NodeJS.Process = isNode ? global.process : null;
 //   }
 // }
 
+/*
 export type EmitKeypressEvents = (
   stream: NodeJS.ReadableStream
 ) => void;
+*/
 
 // Based on: https://github.com/nodejs/node/blob/master/lib/readline.js
+/*
 const emitKeypressEventsLocal = (stream: NodeJS.ReadableStream): void => {
   function onData(b: Buffer) {
 
@@ -69,3 +72,4 @@ const emitKeypressEventsLocal = (stream: NodeJS.ReadableStream): void => {
 };
 
 export const emitKeypressEvents: EmitKeypressEvents = isNode ? emitKeypressEventsLocal : null;
+*/
