@@ -2,7 +2,7 @@
 
 import { TerminalGameIoNode } from './terminal-game-io-node';
 
-describe('TerminalGameIoCommon', () => {
+describe('AbstractTerminalGameIo', () => {
   it('should create proper instance', () => {
     expect(TerminalGameIoNode).toBeTruthy(); // dummy test
   });

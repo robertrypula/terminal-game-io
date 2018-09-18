@@ -1,35 +1,32 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
-import * as fromEnvUtils from '../../env-utils/env-utils';
-import { TerminalGameIoCommon } from '../terminal-game-io-common/terminal-game-io-common';
-import { ITerminalGameIo, ITerminalGameIoOptions } from '../terminal-game-io.interface';
+import { ITerminalGameIo, ITerminalGameIoOptions, process } from '..';
+import { AbstractTerminalGameIo } from './abstract-terminal-game-io';
 
-const CSI = String.fromCharCode(0x1b) + '[';
+const CSI = String.fromCharCode(27) + '[';
+const cursorPosition = (x: number, y: number) => `${CSI}${y};${y}H`;
 
-export class TerminalGameIoNode extends TerminalGameIoCommon implements ITerminalGameIo {
-  constructor(options: ITerminalGameIoOptions) {
+export class TerminalGameIoNode extends AbstractTerminalGameIo implements ITerminalGameIo {
+  public constructor(options: ITerminalGameIoOptions) {
     super(options);
   }
 
   public write(value: string): void {
-    fromEnvUtils.process.stdout.write(value);
+    process.stdout.write(value);
   }
 
-  public exit(): void {
-    clearInterval(this.intervalId);
-
-    fromEnvUtils.process.stdin.removeAllListeners();
-    fromEnvUtils.process.exit();
-    this.active = false;
+  protected cleanupBeforeExit(): void {
+    process.stdin.removeAllListeners();
+    process.exit();
   }
 
   protected clear(): void {
-    fromEnvUtils.process.stdout.write(CSI + 1 + ';' + 1 + 'H');
+    this.write(cursorPosition(1, 1));
   }
 
-  protected initialize() {
-    fromEnvUtils.process.stdin.setRawMode(true);
-    fromEnvUtils.process.stdin.on('data', (buffer: Buffer) => {
+  protected initializeEvents(): void {
+    process.stdin.setRawMode(true);
+    process.stdin.on('data', (buffer: Buffer) => {
       const data: any[] = buffer.toJSON().data;
       let keyName = '';
 
@@ -51,6 +48,10 @@ export class TerminalGameIoNode extends TerminalGameIoCommon implements ITermina
       // console.log('onData', keyName, data); // TODO remove me
       this.keypressHandler(this, keyName);
     });
+  }
+
+  protected initialize(): void {
+    this.initializeEvents();
     this.intervalId = setInterval(() => this.frameHandler(this), this.frameDuration);
     this.active = true;
   }

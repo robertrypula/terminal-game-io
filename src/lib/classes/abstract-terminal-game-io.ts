@@ -5,9 +5,9 @@ import {
   ITerminalGameIo,
   ITerminalGameIoOptions,
   KeypressHandler
-} from '../terminal-game-io.interface';
+} from '..';
 
-export abstract class TerminalGameIoCommon implements ITerminalGameIo {
+export abstract class AbstractTerminalGameIo implements ITerminalGameIo {
   protected active: boolean;
   protected frameDuration: number;
   protected frameHandler: FrameHandler;
@@ -43,7 +43,11 @@ export abstract class TerminalGameIoCommon implements ITerminalGameIo {
     }
   }
 
-  public abstract exit(): void;
+  public exit(): void {
+    this.active = false;
+    clearInterval(this.intervalId);
+    this.cleanupBeforeExit();
+  }
 
   public getTime(): number {
     const now = new Date().getTime();
@@ -62,9 +66,13 @@ export abstract class TerminalGameIoCommon implements ITerminalGameIo {
 
   protected abstract clear(): void;
 
-  protected abstract initialize(): void;
+  protected abstract cleanupBeforeExit(): void;
 
-  protected keydownEventListener = (e: KeyboardEvent): void => {
-    this.keypressHandler(this, e.key);
+  protected initialize(): void {
+    this.initializeEvents();
+    this.intervalId = setInterval(() => this.frameHandler(this), this.frameDuration);
+    this.active = true;
   }
+
+  protected abstract initializeEvents(): void;
 }

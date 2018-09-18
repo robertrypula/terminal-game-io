@@ -2,7 +2,7 @@
 
 import { TerminalGameIoBrowser } from './terminal-game-io-browser';
 
-describe('TerminalGameIoCommon', () => {
+describe('AbstractTerminalGameIo', () => {
   it('should create proper instance', () => {
     expect(TerminalGameIoBrowser).toBeTruthy(); // dummy test
   });

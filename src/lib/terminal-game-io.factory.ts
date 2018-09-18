@@ -1,13 +1,13 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
-import { isBrowser, isNode } from '..';
-import { TerminalGameIoBrowser } from './terminal-game-io-browser/terminal-game-io-browser';
-import { TerminalGameIoNode } from './terminal-game-io-node/terminal-game-io-node';
+import { isBrowser, isNode } from '.';
+import { TerminalGameIoBrowser } from './classes/terminal-game-io-browser';
+import { TerminalGameIoNode } from './classes/terminal-game-io-node';
 import {
   ITerminalGameIoOptions,
   ITerminalGameIoStatic,
   TerminalGameIoFactory
-} from './terminal-game-io.interface';
+} from './models/terminal-game-io.interface';
 
 export const createTerminalGameIo: TerminalGameIoFactory = (
   options: ITerminalGameIoOptions
