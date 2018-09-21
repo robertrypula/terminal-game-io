@@ -25,11 +25,15 @@ export abstract class AbstractTerminalGameIo implements ITerminalGameIo {
     this.frameHandler(this);
   }
 
-  public drawFrame(frameData: string, width: number, height: number): void {
+  public drawFrame(data: string, width: number, height: number): void {
     let index: number = 0;
     let line: string;
 
-    if (frameData.length !== width * height) {
+    if (!this.active) {
+      return;
+    }
+
+    if (data.length !== width * height) {
       throw new Error('Frame data is not matching drawFrame dimensions');
     }
 
@@ -37,7 +41,7 @@ export abstract class AbstractTerminalGameIo implements ITerminalGameIo {
     for (let y = 0; y < height; y++) {
       line = '';
       for (let x = 0; x < width; x++) {
-        line += frameData[index++];
+        line += data[index++];
       }
       this.write(line + '\n');
     }
@@ -57,9 +61,11 @@ export abstract class AbstractTerminalGameIo implements ITerminalGameIo {
   }
 
   public triggerKeypress(keyName: string): void {
-    if (this.active) {
-      this.keypressHandler(this, keyName);
+    if (!this.active) {
+      return;
     }
+
+    this.keypressHandler(this, keyName);
   }
 
   public abstract write(value: string): void;

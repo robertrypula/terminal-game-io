@@ -1,10 +1,12 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
 import { getElementById, ITerminalGameIo, ITerminalGameIoOptions } from '..';
+import { getNormalizedKeyName } from '../utilities/browser-keyboard-event';
 import { AbstractTerminalGameIo } from './abstract-terminal-game-io';
 
 export class TerminalGameIoBrowser extends AbstractTerminalGameIo implements ITerminalGameIo {
   protected domElementId: string;
+  protected keydownEventListener: (e: KeyboardEvent) => void;
 
   public constructor(options: ITerminalGameIoOptions) {
     super(options);
@@ -32,10 +34,13 @@ export class TerminalGameIoBrowser extends AbstractTerminalGameIo implements ITe
   }
 
   protected initializeEvents(): void {
-    document.addEventListener('keydown', this.keydownEventListener);
-  }
+    this.keydownEventListener = (e: KeyboardEvent): void => {
+      const keyName = getNormalizedKeyName(e);
 
-  protected keydownEventListener = (e: KeyboardEvent): void => {
-    this.keypressHandler(this, e.key);
+      this.keypressHandler(this, keyName);
+      e.preventDefault();
+    };
+
+    document.addEventListener('keydown', this.keydownEventListener);
   }
 }

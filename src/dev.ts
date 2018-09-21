@@ -46,19 +46,19 @@ const keypressHandler: KeypressHandler = (instance: ITerminalGameIo, keyName: st
   lastKeyName = keyName;
 
   switch (keyName) {
-    case 'down':
+    case 'ArrowDown':
       posY = (posY + 1) % BOARD_HEIGHT;
       break;
-    case 'up':
+    case 'ArrowUp':
       posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
       break;
-    case 'left':
+    case 'ArrowLeft':
       posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
       break;
-    case 'right':
+    case 'ArrowRight':
       posX = (posX + 1) % BOARD_WIDTH;
       break;
-    case 'escape':
+    case 'Escape':
       instance.exit();
       break;
   }

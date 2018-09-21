@@ -12,33 +12,42 @@ const isSingleBytePrintableAscii = (data: number[]): boolean => {
 
 const keyMap = [
   // other ASCII
-  { data: [8], keyName: 'backspace' },
-  { data: [9], keyName: 'tab' },
-  { data: [13], keyName: 'enter' },
-  { data: [27], keyName: 'escape' },
-  { data: [32], keyName: 'space' },
-  { data: [126, 126], keyName: '~' },
-  { data: [27, 91, 51, 126], keyName: 'delete' },
+  { data: [8], keyName: 'Backspace' },
+  { data: [9], keyName: 'Tab' },
+  { data: [13], keyName: 'Enter' },
+  { data: [27], keyName: 'Escape' },
+  { data: [32], keyName: 'Space' },
+  // { data: [126, 126], keyName: '~' },   // remove tilde as this is not the key available via single press
+  { data: [27, 91, 51, 126], keyName: 'Delete' },
   // arrows
-  { data: [27, 91, 65], keyName: 'up' },
-  { data: [27, 91, 66], keyName: 'down' },
-  { data: [27, 91, 67], keyName: 'right' },
-  { data: [27, 91, 68], keyName: 'left' },
+  { data: [27, 91, 65], keyName: 'ArrowUp' },
+  { data: [27, 91, 66], keyName: 'ArrowDown' },
+  { data: [27, 91, 67], keyName: 'ArrowRight' },
+  { data: [27, 91, 68], keyName: 'ArrowLeft' },
   // cursor position
-  { data: [1234], keyName: 'pageUp' },    // TODO add
-  { data: [1234], keyName: 'pageDown' },  // TODO add
-  { data: [1234], keyName: 'home' },      // TODO add
-  { data: [1234], keyName: 'end' },       // TODO add
+  { data: [27, 91, 49, 126], keyName: 'Home' },
+  { data: [27, 91, 50, 126], keyName: 'Insert' },
+  { data: [27, 91, 52, 126], keyName: 'End' },
+  { data: [27, 91, 53, 126], keyName: 'PageUp' },
+  { data: [27, 91, 54, 126], keyName: 'PageDown' },
   // functional
-  { data: [1234], keyName: 'f1' },    // TODO add
-  { data: [1234], keyName: 'f2' }     // TODO add
+  { data: [27, 91, 91, 65], keyName: 'F1' },
+  { data: [27, 91, 91, 66], keyName: 'F2' },
+  { data: [27, 91, 91, 67], keyName: 'F3' },
+  { data: [27, 91, 91, 68], keyName: 'F4' },
+  { data: [27, 91, 91, 69], keyName: 'F5' },
+  { data: [27, 91, 49, 55, 126], keyName: 'F6' },
+  { data: [27, 91, 49, 56, 126], keyName: 'F7' },
+  { data: [27, 91, 49, 57, 126], keyName: 'F8' },
+  { data: [27, 91, 50, 48, 126], keyName: 'F9' },
+  { data: [27, 91, 50, 49, 126], keyName: 'F10' },
+  { data: [27, 91, 50, 51, 126], keyName: 'F11' },
+  { data: [27, 91, 50, 52, 126], keyName: 'F12' }
 ];
 
 export const getKeyName = (data: number[]): string => {
   let keyName = '';
   let match;
-
-  /*console.log(data);*/
 
   if (isSingleBytePrintableAscii(data)) {
     return String.fromCharCode(data[0]);

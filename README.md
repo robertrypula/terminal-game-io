@@ -30,12 +30,16 @@ npm install terminal-game-io
 - [DONE] add ability to change DOM element id
 - [DONE] add ability to trigger keypress handler from other sources (mouse click, swipe event)
 - [DONE] fix error with node environment detection
-- remove externals ('process' and 'readline')
-- split main class into two (one for node, one for browser)
-- render only part that really changed
-- write unit tests
-- use requestAnimationFrame
+- [DONE, not yet released] remove externals ('process' and 'readline')
+- [DONE, not yet released] split main class into two (one for node, one for browser)
 - normalize keyNames, currently there is a mismatch between node and browser
+- render the frame only if it's different than previous (easy performance fix)
+- remove write method
+- fix mobile buttons on demo apps
+- render only part that really changed (more complex performance fix)
+- use requestAnimationFrame
+- add keyName constants
+- write unit tests
 
 ## Example - NodeJs, pure JavaScript
 

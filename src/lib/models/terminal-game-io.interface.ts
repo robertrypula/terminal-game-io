@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
 export interface ITerminalGameIo {
-  drawFrame(frameData: string, width: number, height: number): void;
+  drawFrame(data: string, width: number, height: number): void;
   exit(): void;
   getTime(): number;
   triggerKeypress(keyName: string): void;
@@ -24,4 +24,4 @@ export interface ITerminalGameIoStatic {
 export type FrameHandler = (instance: ITerminalGameIo) => void;
 export type KeypressHandler = (instance: ITerminalGameIo, keyName: string) => void;
 
-export type TerminalGameIoFactory = (terminalGameIoOptions: ITerminalGameIoOptions) => ITerminalGameIo;
+export type TerminalGameIoFactory = (options: ITerminalGameIoOptions) => ITerminalGameIo;
