@@ -21,7 +21,7 @@ export class TerminalGameIoBrowser extends AbstractTerminalGameIo implements ITe
     }
   }
 
-  protected cleanupBeforeExit(): void {
+  protected finalCleanup(): void {
     document.removeEventListener('keydown', this.keydownEventListener);
   }
 

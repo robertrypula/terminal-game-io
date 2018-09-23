@@ -13,7 +13,7 @@ export class TerminalGameIoNode extends AbstractTerminalGameIo implements ITermi
     process.stdout.write(value);
   }
 
-  protected cleanupBeforeExit(): void {
+  protected finalCleanup(): void {
     process.stdin.removeAllListeners();
     process.exit();
   }
@@ -29,11 +29,5 @@ export class TerminalGameIoNode extends AbstractTerminalGameIo implements ITermi
 
       this.keypressHandler(this, keyName);
     });
-  }
-
-  protected initialize(): void {
-    this.initializeEvents();
-    this.intervalId = setInterval(() => this.frameHandler(this), this.frameDuration);
-    this.active = true;
   }
 }

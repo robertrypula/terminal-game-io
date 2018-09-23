@@ -1,16 +1,12 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
-export interface ITerminalGameIo {
-  drawFrame(data: string, width: number, height: number): void;
-  exit(): void;
-  getTime(): number;
-  triggerKeypress(keyName: string): void;
-  write(value: string): void;
-}
+import { IAbstractTerminalGameIo, IAbstractTerminalGameIoOptions } from './abstract-terminal-game-io.interface';
 
-export interface ITerminalGameIoOptions {
+/*tslint:disable-next-line:no-empty-interface*/
+export interface ITerminalGameIo extends IAbstractTerminalGameIo { }
+
+export interface ITerminalGameIoOptions extends IAbstractTerminalGameIoOptions {
   domElementId?: string;
-  fps: number;
   frameHandler: FrameHandler;
   keypressHandler: KeypressHandler;
 }
@@ -21,7 +17,7 @@ export interface ITerminalGameIoStatic {
   ): ITerminalGameIo;
 }
 
+export type TerminalGameIoFactory = (options: ITerminalGameIoOptions) => ITerminalGameIo;
+
 export type FrameHandler = (instance: ITerminalGameIo) => void;
 export type KeypressHandler = (instance: ITerminalGameIo, keyName: string) => void;
-
-export type TerminalGameIoFactory = (options: ITerminalGameIoOptions) => ITerminalGameIo;

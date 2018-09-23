@@ -1,21 +1,21 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
 import {
-  FrameHandler,
-  ITerminalGameIo,
-  ITerminalGameIoOptions,
-  KeypressHandler
-} from '..';
+  AbstractFrameHandler,
+  AbstractKeypressHandler,
+  IAbstractTerminalGameIo,
+  IAbstractTerminalGameIoOptions
+} from '../models/abstract-terminal-game-io.interface';
 
-export abstract class AbstractTerminalGameIo implements ITerminalGameIo {
+export abstract class AbstractTerminalGameIo implements IAbstractTerminalGameIo {
   protected active: boolean;
   protected frameDuration: number;
-  protected frameHandler: FrameHandler;
+  protected frameHandler: AbstractFrameHandler;
   protected intervalId: any;
-  protected keypressHandler: KeypressHandler;
+  protected keypressHandler: AbstractKeypressHandler;
   protected startTime: number;
 
-  protected constructor(options: ITerminalGameIoOptions) {
+  protected constructor(options: IAbstractTerminalGameIoOptions) {
     this.frameDuration = Math.round(1000 / options.fps);
     this.frameHandler = options.frameHandler;
     this.keypressHandler = options.keypressHandler;
@@ -26,7 +26,8 @@ export abstract class AbstractTerminalGameIo implements ITerminalGameIo {
   }
 
   public drawFrame(data: string, width: number, height: number): void {
-    let index: number = 0;
+    let fullFrame = '';
+    let index = 0;
     let line: string;
 
     if (!this.active) {
@@ -43,14 +44,15 @@ export abstract class AbstractTerminalGameIo implements ITerminalGameIo {
       for (let x = 0; x < width; x++) {
         line += data[index++];
       }
-      this.write(line + '\n');
+      fullFrame += line + '\n';
     }
+    this.write(fullFrame);
   }
 
   public exit(): void {
     this.active = false;
     clearInterval(this.intervalId);
-    this.cleanupBeforeExit();
+    this.finalCleanup();
   }
 
   public getTime(): number {
@@ -72,7 +74,7 @@ export abstract class AbstractTerminalGameIo implements ITerminalGameIo {
 
   protected abstract clear(): void;
 
-  protected abstract cleanupBeforeExit(): void;
+  protected abstract finalCleanup(): void;
 
   protected initialize(): void {
     this.initializeEvents();

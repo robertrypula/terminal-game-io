@@ -46,7 +46,6 @@ const keyMap = [
 ];
 
 export const getKeyName = (data: number[]): string => {
-  let keyName = '';
   let match;
 
   if (isSingleBytePrintableAscii(data)) {
@@ -56,8 +55,8 @@ export const getKeyName = (data: number[]): string => {
   match = keyMap.filter((entry) => entry.data.join(',') === data.join(','));
 
   if (match.length === 1) {
-    keyName = match[0].keyName;
+    return match[0].keyName;
   }
 
-  return keyName;
+  return '';
 };
