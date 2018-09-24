@@ -42,7 +42,7 @@ const keyNameMap = [
   { keyNameIn: ['Decimal'], keyNameOut: '.' },
   { keyNameIn: ['Divide'], keyNameOut: '/' },
   { keyNameIn: ['Multiply'], keyNameOut: '*' },
-  { keyNameIn: ['Subtract'], keyNameOut: '-' },
+  { keyNameIn: ['Subtract'], keyNameOut: '-' }
 ];
 
 export const getNormalizedKeyName = (e: KeyboardEvent): string => {
@@ -59,7 +59,6 @@ export const getNormalizedKeyName = (e: KeyboardEvent): string => {
   if (match.length === 1) {
     return match[0].keyNameOut;
   }
-
 
   // TODO remove me
   document.getElementById('ie-test').innerHTML = document.getElementById('ie-test').innerHTML + e.key + ', ';
