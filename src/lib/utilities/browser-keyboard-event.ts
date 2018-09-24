@@ -1,4 +1,5 @@
 const isPrintableAscii = (keyName: string): boolean => {
+  // skip tilde as this is not the key available via single press
   return keyName.length === 1 &&
     '!'.charCodeAt(0) <= keyName.charCodeAt(0) &&
     keyName.charCodeAt(0) <= '}'.charCodeAt(0);
@@ -9,15 +10,14 @@ const keyNameMap = [
   { keyNameIn: ['Backspace'], keyNameOut: 'Backspace' },
   { keyNameIn: ['Tab'], keyNameOut: 'Tab' },
   { keyNameIn: ['Enter'], keyNameOut: 'Enter' },
-  { keyNameIn: ['Escape'], keyNameOut: 'Escape' },
-  { keyNameIn: ['Space'], keyNameOut: 'Space' },
-  // { keyNameIn: [126, 126], keyNameOut: '~' },   // remove tilde as this is not the key available via single press
-  { keyNameIn: ['Delete'], keyNameOut: 'Delete' },
+  { keyNameIn: ['Escape', 'Esc'], keyNameOut: 'Escape' },
+  { keyNameIn: ['Space', 'Spacebar', ' '], keyNameOut: 'Space' },
+  { keyNameIn: ['Delete', 'Del'], keyNameOut: 'Delete' },
   // arrows
-  { keyNameIn: ['ArrowUp'], keyNameOut: 'ArrowUp' },
-  { keyNameIn: ['ArrowDown'], keyNameOut: 'ArrowDown' },
-  { keyNameIn: ['ArrowRight'], keyNameOut: 'ArrowRight' },
-  { keyNameIn: ['ArrowLeft'], keyNameOut: 'ArrowLeft' },
+  { keyNameIn: ['ArrowUp', 'Up'], keyNameOut: 'ArrowUp' },
+  { keyNameIn: ['ArrowDown', 'Down'], keyNameOut: 'ArrowDown' },
+  { keyNameIn: ['ArrowRight', 'Right'], keyNameOut: 'ArrowRight' },
+  { keyNameIn: ['ArrowLeft', 'Left'], keyNameOut: 'ArrowLeft' },
   // cursor position
   { keyNameIn: ['Home'], keyNameOut: 'Home' },
   { keyNameIn: ['Insert'], keyNameOut: 'Insert' },
@@ -36,7 +36,13 @@ const keyNameMap = [
   { keyNameIn: ['F9'], keyNameOut: 'F9' },
   { keyNameIn: ['F10'], keyNameOut: 'F10' },
   { keyNameIn: ['F11'], keyNameOut: 'F11' },
-  { keyNameIn: ['F12'], keyNameOut: 'F12' }
+  { keyNameIn: ['F12'], keyNameOut: 'F12' },
+  // purely IE mapping
+  { keyNameIn: ['Add'], keyNameOut: '+' },
+  { keyNameIn: ['Decimal'], keyNameOut: '.' },
+  { keyNameIn: ['Divide'], keyNameOut: '/' },
+  { keyNameIn: ['Multiply'], keyNameOut: '*' },
+  { keyNameIn: ['Subtract'], keyNameOut: '-' },
 ];
 
 export const getNormalizedKeyName = (e: KeyboardEvent): string => {
@@ -53,6 +59,10 @@ export const getNormalizedKeyName = (e: KeyboardEvent): string => {
   if (match.length === 1) {
     return match[0].keyNameOut;
   }
+
+
+  // TODO remove me
+  document.getElementById('ie-test').innerHTML = document.getElementById('ie-test').innerHTML + e.key + ', ';
 
   return '';
 };

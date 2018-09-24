@@ -5,6 +5,7 @@ const CSI = String.fromCharCode(27) + '[';
 export const cursorPosition = (x: number, y: number) => `${CSI}${y};${y}H`;
 
 const isSingleBytePrintableAscii = (data: number[]): boolean => {
+  // skip tilde as this is not the key available via single press
   return data.length === 1 &&
     '!'.charCodeAt(0) <= data[0] &&
     data[0] <= '}'.charCodeAt(0);
@@ -17,7 +18,6 @@ const keyMap = [
   { data: [13], keyName: 'Enter' },
   { data: [27], keyName: 'Escape' },
   { data: [32], keyName: 'Space' },
-  // { data: [126, 126], keyName: '~' },   // remove tilde as this is not the key available via single press
   { data: [27, 91, 51, 126], keyName: 'Delete' },
   // arrows
   { data: [27, 91, 65], keyName: 'ArrowUp' },
