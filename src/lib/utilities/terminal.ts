@@ -13,7 +13,7 @@ const isSingleBytePrintableAscii = (data: number[]): boolean => {
 
 const keyMap = [
   // other ASCII
-  { data: [8], keyName: 'Backspace' },
+  { data: [8], keyName: 'Backspace' },         // ssh connection via putty: 127
   { data: [9], keyName: 'Tab' },
   { data: [13], keyName: 'Enter' },
   { data: [27], keyName: 'Escape' },
@@ -31,11 +31,11 @@ const keyMap = [
   { data: [27, 91, 53, 126], keyName: 'PageUp' },
   { data: [27, 91, 54, 126], keyName: 'PageDown' },
   // functional
-  { data: [27, 91, 91, 65], keyName: 'F1' },
-  { data: [27, 91, 91, 66], keyName: 'F2' },
-  { data: [27, 91, 91, 67], keyName: 'F3' },
-  { data: [27, 91, 91, 68], keyName: 'F4' },
-  { data: [27, 91, 91, 69], keyName: 'F5' },
+  { data: [27, 91, 91, 65], keyName: 'F1' },  // ssh connection via putty: 27, 91, 49, 49, 126
+  { data: [27, 91, 91, 66], keyName: 'F2' },  // ssh connection via putty: 27, 91, 49, 50, 126
+  { data: [27, 91, 91, 67], keyName: 'F3' },  // ssh connection via putty: 27, 91, 49, 51, 126
+  { data: [27, 91, 91, 68], keyName: 'F4' },  // ssh connection via putty: 27, 91, 49, 52, 126
+  { data: [27, 91, 91, 69], keyName: 'F5' },  // ssh connection via putty: 27, 91, 49, 53, 126
   { data: [27, 91, 49, 55, 126], keyName: 'F6' },
   { data: [27, 91, 49, 56, 126], keyName: 'F7' },
   { data: [27, 91, 49, 57, 126], keyName: 'F8' },
@@ -57,6 +57,9 @@ export const getKeyName = (data: number[]): string => {
   if (match.length === 1) {
     return match[0].keyName;
   }
+
+  /*tslint:disable-next-line*/
+  console.log(data.join(', ') + '                                 ');
 
   return '';
 };
