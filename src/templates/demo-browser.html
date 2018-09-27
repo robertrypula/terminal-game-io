@@ -2,15 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Terminal Game UI</title>
+  <title>Terminal Game IO</title>
   <style>
     .mobile-device-buttons {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .mobile-device-buttons button {
       position: fixed;
       display: block;
       width: 33%;
       height: 50%;
+      border: none;
+      outline: none;
+      background: none;
+      cursor: pointer;
     }
-    .mobile-device-buttons:hover {
+    .mobile-device-buttons button:hover {
       background-color: rgba(0, 0, 0, 0.05);
     }
   </style>
@@ -18,24 +31,13 @@
 </head>
 <body onLoad="run()">
   <pre id="root"></pre>
-  <ie-test id="ie-test"></ie-test>
 
-  <a
-    href="javascript:void(0)" onClick="handleClick(event, 'ClickDown')"
-    class="mobile-device-buttons" style="top: 50%; left: 33%;"
-  ></a>
-  <a
-    href="javascript:void(0)" onClick="handleClick(event, 'ClickUp')"
-    class="mobile-device-buttons" style="top: 0; left: 33%;"
-  ></a>
-  <a
-    href="javascript:void(0)" onClick="handleClick(event, 'ClickLeft')"
-    class="mobile-device-buttons" style="top: 50%; left: 0;"
-  ></a>
-  <a
-    href="javascript:void(0)" onClick="handleClick(event, 'ClickRight')"
-    class="mobile-device-buttons" style="top: 50%; left: 66%;"
-  ></a>
+  <div class="mobile-device-buttons">
+    <button onClick="handleClick(event, 'ArrowDown')" style="top: 50%; left: 33%;"></button>
+    <button onClick="handleClick(event, 'ArrowUp')" style="top: 0; left: 33%;"></button>
+    <button onClick="handleClick(event, 'ArrowLeft')" style="top: 50%; left: 0;"></button>
+    <button onClick="handleClick(event, 'ArrowRight')" style="top: 50%; left: 66%;"></button>
+  </div>
 
   <script>
     var FPS = 5;
@@ -57,12 +59,20 @@
         }
       }
 
-      instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
-      instance.write('Frame: ' + (frameNumber++) + '\n');
-      instance.write('Time: ' + instance.getTime().toFixed(3) + 's\n');
-      instance.write('Last key name: ' + lastKeyName + '\n\n');
-      instance.write('Use arrows to move.\n');
-      instance.write('Press Escape to exit...\n');
+      frameData = addLine(frameData, 'Frame: ' + (frameNumber++), BOARD_WIDTH);
+      frameData = addLine(frameData, 'Time: ' + instance.getTime().toFixed(3) + 's', BOARD_WIDTH);
+      frameData = addLine(frameData, 'Last key name: ' + lastKeyName, BOARD_WIDTH);
+      frameData = addLine(frameData, '', BOARD_WIDTH);
+      frameData = addLine(frameData, 'Use arrows to move.', BOARD_WIDTH);
+      frameData = addLine(frameData, 'Press Escape to exit...', BOARD_WIDTH);
+
+      instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT + 6);
+    }
+
+    function addLine(frameData, line, lineWidth) {
+      return line.length > lineWidth
+        ? frameData + line.substr(0, lineWidth)
+        : frameData + line + (new Array(lineWidth - line.length + 1).join(' '));
     }
 
     function keypressHandler(instance, keyName) {
@@ -71,27 +81,18 @@
       frameHandler(instance);
 
       switch (keyName) {
-        case 'Down':
         case 'ArrowDown':
-        case 'ClickDown':
           posY = (posY + 1) % BOARD_HEIGHT;
           break;
-        case 'Up':
         case 'ArrowUp':
-        case 'ClickUp':
           posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
           break;
-        case 'Left':
         case 'ArrowLeft':
-        case 'ClickLeft':
           posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
           break;
-        case 'Right':
         case 'ArrowRight':
-        case 'ClickRight':
           posX = (posX + 1) % BOARD_WIDTH;
           break;
-        case 'Esc':
         case 'Escape':
           instance.exit();
           break;
@@ -99,10 +100,12 @@
     }
 
     function handleClick(event, keyName) {
-      event.preventDefault();
-      if (terminalGameIo) {
-        terminalGameIo.triggerKeypress(keyName);
+      if (!terminalGameIo) {
+        return;
       }
+
+      event.preventDefault();
+      terminalGameIo.triggerKeypress(keyName);
     }
 
     function run() {
