@@ -27,6 +27,8 @@ export class TerminalGameIoNode extends AbstractTerminalGameIo implements ITermi
     process.stdin.on('data', (buffer: Buffer) => {
       const keyName = getKeyName(buffer.toJSON().data);
 
+      // TODO on ssh connections more than one key might be present in the data array - fix it
+
       this.keypressHandler(this, keyName);
     });
   }
