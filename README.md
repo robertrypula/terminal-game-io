@@ -32,13 +32,13 @@ npm install terminal-game-io
 - [DONE] fix error with node environment detection
 - [DONE, not yet released] remove externals ('process' and 'readline')
 - [DONE, not yet released] split main class into two (one for node, one for browser)
-- normalize keyNames, currently there is a mismatch between node and browser
+- [DONE, not yet released] normalize keyNames, currently there is a mismatch between node and browser
+- [DONE, not yet released] remove write method
+- [DONE, not yet released] fix mobile buttons on demo apps
+- [DONE, not yet released] add keyName constants
 - render the frame only if it's different than previous (easy performance fix)
-- remove write method
-- fix mobile buttons on demo apps
 - render only part that really changed (more complex performance fix)
 - use requestAnimationFrame
-- add keyName constants
 - write unit tests
 
 ## Example - NodeJs, pure JavaScript

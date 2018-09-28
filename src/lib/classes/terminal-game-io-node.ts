@@ -1,6 +1,6 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
-import { ITerminalGameIo, ITerminalGameIoOptions, process } from '..';
+import { ITerminalGameIo, ITerminalGameIoOptions, KeyName, process } from '..';
 import { cursorPosition, getKeyName } from '../utilities/terminal';
 import { AbstractTerminalGameIo } from './abstract-terminal-game-io';
 
@@ -15,7 +15,7 @@ export class TerminalGameIoNode extends AbstractTerminalGameIo implements ITermi
   }
 
   protected clear(): void {
-    this.write(cursorPosition(1, 1));
+    this.write(cursorPosition(0, 0));
   }
 
   protected initializeEvents(): void {

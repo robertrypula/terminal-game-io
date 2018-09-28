@@ -1,5 +1,6 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
+import { KeyName } from '..';
 import {
   AbstractFrameHandler,
   AbstractKeypressHandler,
@@ -62,7 +63,7 @@ export abstract class AbstractTerminalGameIo implements IAbstractTerminalGameIo 
     return difference / 1000;
   }
 
-  public triggerKeypress(keyName: string): void {
+  public triggerKeypress(keyName: KeyName | string): void {
     if (!this.active) {
       return;
     }

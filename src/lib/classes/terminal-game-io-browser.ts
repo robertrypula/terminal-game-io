@@ -1,6 +1,6 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
-import { getElementById, ITerminalGameIo, ITerminalGameIoOptions } from '..';
+import { getElementById, ITerminalGameIo, ITerminalGameIoOptions, KeyName } from '..';
 import { getNormalizedKeyName } from '../utilities/browser-keyboard-event';
 import { AbstractTerminalGameIo } from './abstract-terminal-game-io';
 

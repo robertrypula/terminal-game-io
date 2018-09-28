@@ -1,8 +1,10 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
+import { IKeyNameMapNode, KeyName } from '../models/key-name.interface';
+
 const CSI = String.fromCharCode(27) + '[';
 
-export const cursorPosition = (x: number, y: number) => `${CSI}${y};${y}H`;
+export const cursorPosition = (x: number, y: number) => `${CSI}${y + 1};${y + 1}H`;
 
 const isSingleBytePrintableAscii = (data: number[]): boolean => {
   // skip tilde as this is not the key available via single press
@@ -11,42 +13,42 @@ const isSingleBytePrintableAscii = (data: number[]): boolean => {
     data[0] <= '}'.charCodeAt(0);
 };
 
-const keyMap = [
+const keyMap: IKeyNameMapNode[] = [
   // other ASCII
-  { data: [[8], [127]], keyName: 'Backspace' },   // ssh connection via putty generates 127 for Backspace - weird...
-  { data: [[9]], keyName: 'Tab' },
-  { data: [[13]], keyName: 'Enter' },
-  { data: [[27]], keyName: 'Escape' },
-  { data: [[32]], keyName: 'Space' },
-  { data: [[27, 91, 51, 126]], keyName: 'Delete' },
+  { data: [[8], [127]], keyName: KeyName.Backspace }, // ssh connection via putty generates 127 for Backspace - weird...
+  { data: [[9]], keyName: KeyName.Tab },
+  { data: [[13]], keyName: KeyName.Enter },
+  { data: [[27]], keyName: KeyName.Escape },
+  { data: [[32]], keyName: KeyName.Space },
+  { data: [[27, 91, 51, 126]], keyName: KeyName.Delete },
   // arrows
-  { data: [[27, 91, 65]], keyName: 'ArrowUp' },
-  { data: [[27, 91, 66]], keyName: 'ArrowDown' },
-  { data: [[27, 91, 67]], keyName: 'ArrowRight' },
-  { data: [[27, 91, 68]], keyName: 'ArrowLeft' },
+  { data: [[27, 91, 65]], keyName: KeyName.ArrowUp },
+  { data: [[27, 91, 66]], keyName: KeyName.ArrowDown },
+  { data: [[27, 91, 67]], keyName: KeyName.ArrowRight },
+  { data: [[27, 91, 68]], keyName: KeyName.ArrowLeft },
   // cursor position
-  { data: [[27, 91, 49, 126]], keyName: 'Home' },
-  { data: [[27, 91, 50, 126]], keyName: 'Insert' },
-  { data: [[27, 91, 52, 126]], keyName: 'End' },
-  { data: [[27, 91, 53, 126]], keyName: 'PageUp' },
-  { data: [[27, 91, 54, 126]], keyName: 'PageDown' },
+  { data: [[27, 91, 49, 126]], keyName: KeyName.Home },
+  { data: [[27, 91, 50, 126]], keyName: KeyName.Insert },
+  { data: [[27, 91, 52, 126]], keyName: KeyName.End },
+  { data: [[27, 91, 53, 126]], keyName: KeyName.PageUp },
+  { data: [[27, 91, 54, 126]], keyName: KeyName.PageDown },
   // functional
-  { data: [[27, 91, 91, 65], [27, 91, 49, 49, 126]], keyName: 'F1' },
-  { data: [[27, 91, 91, 66], [27, 91, 49, 50, 126]], keyName: 'F2' },
-  { data: [[27, 91, 91, 67], [27, 91, 49, 51, 126]], keyName: 'F3' },
-  { data: [[27, 91, 91, 68], [27, 91, 49, 52, 126]], keyName: 'F4' },
-  { data: [[27, 91, 91, 69], [27, 91, 49, 53, 126]], keyName: 'F5' },
-  { data: [[27, 91, 49, 55, 126]], keyName: 'F6' },
-  { data: [[27, 91, 49, 56, 126]], keyName: 'F7' },
-  { data: [[27, 91, 49, 57, 126]], keyName: 'F8' },
-  { data: [[27, 91, 50, 48, 126]], keyName: 'F9' },
-  { data: [[27, 91, 50, 49, 126]], keyName: 'F10' },
-  { data: [[27, 91, 50, 51, 126]], keyName: 'F11' },
-  { data: [[27, 91, 50, 52, 126]], keyName: 'F12' }
+  { data: [[27, 91, 91, 65], [27, 91, 49, 49, 126]], keyName: KeyName.F1 },
+  { data: [[27, 91, 91, 66], [27, 91, 49, 50, 126]], keyName: KeyName.F2 },
+  { data: [[27, 91, 91, 67], [27, 91, 49, 51, 126]], keyName: KeyName.F3 },
+  { data: [[27, 91, 91, 68], [27, 91, 49, 52, 126]], keyName: KeyName.F4 },
+  { data: [[27, 91, 91, 69], [27, 91, 49, 53, 126]], keyName: KeyName.F5 },
+  { data: [[27, 91, 49, 55, 126]], keyName: KeyName.F6 },
+  { data: [[27, 91, 49, 56, 126]], keyName: KeyName.F7 },
+  { data: [[27, 91, 49, 57, 126]], keyName: KeyName.F8 },
+  { data: [[27, 91, 50, 48, 126]], keyName: KeyName.F9 },
+  { data: [[27, 91, 50, 49, 126]], keyName: KeyName.F10 },
+  { data: [[27, 91, 50, 51, 126]], keyName: KeyName.F11 },
+  { data: [[27, 91, 50, 52, 126]], keyName: KeyName.F12 }
 ];
 
 export const getKeyName = (data: number[]): string => {
-  let match;
+  let match: IKeyNameMapNode[];
 
   if (isSingleBytePrintableAscii(data)) {
     return String.fromCharCode(data[0]);
@@ -62,9 +64,5 @@ export const getKeyName = (data: number[]): string => {
     return match[0].keyName;
   }
 
-  // TODO remove me
-  /*tslint:disable-next-line*/
-  console.log(data.join(', ') + '                                 ');
-
-  return '';
+  return KeyName.UnknownKey;
 };
