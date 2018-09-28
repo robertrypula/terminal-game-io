@@ -52,6 +52,7 @@
 
     function frameHandler(instance) {
       var frameData = '';
+      var lines = [];
 
       for (var y = 0; y < BOARD_HEIGHT; y++) {
         for (var x = 0; x < BOARD_WIDTH; x++) {
@@ -59,14 +60,19 @@
         }
       }
 
-      frameData = addLine(frameData, 'Frame: ' + (frameNumber++), BOARD_WIDTH);
-      frameData = addLine(frameData, 'Time: ' + instance.getTime().toFixed(3) + 's', BOARD_WIDTH);
-      frameData = addLine(frameData, 'Last key name: ' + lastKeyName, BOARD_WIDTH);
-      frameData = addLine(frameData, '', BOARD_WIDTH);
-      frameData = addLine(frameData, 'Use arrows to move.', BOARD_WIDTH);
-      frameData = addLine(frameData, 'Press Escape to exit...', BOARD_WIDTH);
+      lines.push(
+        'Frame: ' + (frameNumber++),
+        'Time: ' + instance.getTime().toFixed(3) + 's',
+        'Last key name: ' + lastKeyName,
+        '',
+        'Use arrows to move.',
+        'Press Escape to exit...'
+      );
+      for (var i = 0; i < lines.length; i++) {
+        frameData = addLine(frameData, lines[i], BOARD_WIDTH);
+      }
 
-      instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT + 6);
+      instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT + lines.length);
     }
 
     function addLine(frameData, line, lineWidth) {

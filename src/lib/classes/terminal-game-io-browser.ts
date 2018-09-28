@@ -13,14 +13,6 @@ export class TerminalGameIoBrowser extends AbstractTerminalGameIo implements ITe
     this.domElementId = options.domElementId ? options.domElementId : 'root';
   }
 
-  public write(value: string): void {
-    const domElement: HTMLElement = getElementById(this.domElementId);
-
-    if (domElement) {
-      domElement.innerHTML = domElement.innerHTML + value;
-    }
-  }
-
   protected finalCleanup(): void {
     document.removeEventListener('keydown', this.keydownEventListener);
   }
@@ -42,5 +34,13 @@ export class TerminalGameIoBrowser extends AbstractTerminalGameIo implements ITe
     };
 
     document.addEventListener('keydown', this.keydownEventListener);
+  }
+
+  protected write(value: string): void {
+    const domElement: HTMLElement = getElementById(this.domElementId);
+
+    if (domElement) {
+      domElement.innerHTML = domElement.innerHTML + value;
+    }
   }
 }

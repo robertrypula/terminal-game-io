@@ -70,8 +70,6 @@ export abstract class AbstractTerminalGameIo implements IAbstractTerminalGameIo 
     this.keypressHandler(this, keyName);
   }
 
-  public abstract write(value: string): void;
-
   protected abstract clear(): void;
 
   protected abstract finalCleanup(): void;
@@ -83,4 +81,6 @@ export abstract class AbstractTerminalGameIo implements IAbstractTerminalGameIo 
   }
 
   protected abstract initializeEvents(): void;
+
+  protected abstract write(value: string): void;
 }

@@ -18,6 +18,7 @@ let posY = Math.round(BOARD_HEIGHT / 2);
 let frameNumber = 0;
 
 const frameHandler: FrameHandler = (instance: ITerminalGameIo) => {
+  const lines: string[] = [];
   let frameData = '';
 
   for (let y = 0; y < BOARD_HEIGHT; y++) {
@@ -26,12 +27,25 @@ const frameHandler: FrameHandler = (instance: ITerminalGameIo) => {
     }
   }
 
-  instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
-  instance.write('Frame: ' + (frameNumber++) + '\n');
-  instance.write('Time: ' + instance.getTime().toFixed(3) + 's\n');
-  instance.write('Last key name: ' + lastKeyName + '                \n\n');
-  instance.write('Use arrows to move.\n');
-  instance.write('Press Escape to exit...\n');
+  lines.push(
+    'Frame: ' + (frameNumber++),
+    'Time: ' + instance.getTime().toFixed(3) + 's',
+    'Last key name: ' + lastKeyName,
+    '',
+    'Use arrows to move.',
+    'Press Escape to exit...'
+  );
+  for (let i = 0; i < lines.length; i++) {
+    frameData = addLine(frameData, lines[i], BOARD_WIDTH);
+  }
+
+  instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT + lines.length);
+};
+
+const addLine = (frameData: string, line: string, lineWidth: number): string => {
+  return line.length > lineWidth
+    ? frameData + line.substr(0, lineWidth)
+    : frameData + line + (new Array(lineWidth - line.length + 1).join(' '));
 };
 
 const keypressHandler: KeypressHandler = (instance: ITerminalGameIo, keyName: string) => {

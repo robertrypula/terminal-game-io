@@ -5,7 +5,6 @@ export interface IAbstractTerminalGameIo {
   exit(): void;
   getTime(): number;
   triggerKeypress(keyName: string): void;
-  write(value: string): void;
 }
 
 export interface IAbstractTerminalGameIoOptions {
