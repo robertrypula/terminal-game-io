@@ -1,3 +1,7 @@
+// Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
+
+import { IKeyNameMapBrowser } from '../models/key-name.interface';
+
 const isPrintableAscii = (keyName: string): boolean => {
   // skip tilde as this is not the key available via single press
   return keyName.length === 1 &&
@@ -5,7 +9,7 @@ const isPrintableAscii = (keyName: string): boolean => {
     keyName.charCodeAt(0) <= '}'.charCodeAt(0);
 };
 
-const keyNameMap = [
+const keyNameMap: IKeyNameMapBrowser[] = [
   // other ASCII
   { keyNameIn: ['Backspace'], keyNameOut: 'Backspace' },
   { keyNameIn: ['Tab'], keyNameOut: 'Tab' },
@@ -46,7 +50,7 @@ const keyNameMap = [
 ];
 
 export const getNormalizedKeyName = (e: KeyboardEvent): string => {
-  let match;
+  let match: IKeyNameMapBrowser[];
 
   if (isPrintableAscii(e.key)) {
     return e.key;
