@@ -1,7 +1,7 @@
 {
   "name": "terminal-game-io",
   "version": "3.0.0-rc",
-  "description": "It's never been easier to start writing terminal games in NodeJs. This package handles for you basic input (keyboard events) and output (ASCII 'frame'). If you like to share your games directly in the browser don't worry - simple 'browser terminal' emulator is supported too.",
+  "description": "It's never been easier to start writing ASCII games in NodeJs or browser. This package handles for you basic input (keyboard events) and output (ASCII 'frame').",
   "keywords": [
     "ascii game",
     "node game",

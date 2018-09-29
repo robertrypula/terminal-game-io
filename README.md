@@ -6,42 +6,53 @@
 [![dependencies Status](https://david-dm.org/robertrypula/terminal-game-io/status.svg)](https://david-dm.org/robertrypula/terminal-game-io)
 [![devDependencies Status](https://david-dm.org/robertrypula/terminal-game-io/dev-status.svg)](https://david-dm.org/robertrypula/terminal-game-io?type=dev)
 
-It's never been easier to start writing terminal games in NodeJs. This package handles for you basic input (keyboard events) and output (ASCII 'frame').
+It's never been easier to start writing ASCII games in NodeJs or browser. This package handles for you basic input (keyboard events) and output (ASCII 'frame').
+
+NodeJs terminal example:
 
 [![Terminal example](https://cdn.rypula.pl/terminal-game-io/demo-node.gif)](https://cdn.rypula.pl/terminal-game-io/demo-node.gif) 
 
-If you like to share your games directly in the browser don't worry - simple 'browser terminal' emulator is supported too!
+Browser example:
 
 [![Terminal example](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)
 
 Web example available [here](https://cdn.rypula.pl/terminal-game-io/v3.0.0-rc/demo-browser.html)
 
-Code example of the simple use case is available on [CodeSandbox.io](https://codesandbox.io/s/4m94kx0z9)
-
+Interactive code examples available on CodeSandbox.io:
+- Clean JavaScript example [here](https://codesandbox.io/s/4m94kx0z9)
+- Clean JavaScript example with mobile device support [here](https://codesandbox.io/s/nrll993jvm)
+- Angular example [here](https://codesandbox.io/s/y04l1l1069)
+  
 ## Installation
 
 ```
 npm install terminal-game-io
 ```
 
-## TODO
+## Changelog
 
+### 3.0.0
+- remove externals ('process' and 'readline')
+- split main class into two (one for node, one for browser)
+- normalize keyNames, currently there is a mismatch between node and browser
+- remove write method
+- fix mobile buttons on demo apps
+- add keyName constants
+
+### 2.x.x
 - [DONE] export env utils (isBrowser, isNode)
 - [DONE] add ability to change DOM element id
 - [DONE] add ability to trigger keypress handler from other sources (mouse click, swipe event)
 - [DONE] fix error with node environment detection
-- [DONE, not yet released] remove externals ('process' and 'readline')
-- [DONE, not yet released] split main class into two (one for node, one for browser)
-- [DONE, not yet released] normalize keyNames, currently there is a mismatch between node and browser
-- [DONE, not yet released] remove write method
-- [DONE, not yet released] fix mobile buttons on demo apps
-- [DONE, not yet released] add keyName constants
+
+## TODO
+
 - render the frame only if it's different than previous (easy performance fix)
 - render only part that really changed (more complex performance fix)
 - use requestAnimationFrame
 - write unit tests
 
-## Example - NodeJs, pure JavaScript
+## Simplest example - NodeJs, clean JavaScript
 
 Just follow the installation instruction and create `test.js` file with the content below. At the end execute the `node test.js` command.
 
@@ -54,10 +65,8 @@ const BOARD_WIDTH = 40;
 const BOARD_HEIGHT = 12;
 
 let terminalGameIo;
-let lastKeyName = '';
 let posX = Math.round(BOARD_WIDTH / 2);
 let posY = Math.round(BOARD_HEIGHT / 2);
-let frameNumber = 0;
 
 const frameHandler = (instance) => {
   let frameData = '';
@@ -67,32 +76,24 @@ const frameHandler = (instance) => {
       frameData += (posX === x && posY === y) ? '@' : '.';
     }
   }
-
   instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
-  instance.write('Frame: ' + (frameNumber++) + '\n');
-  instance.write('Time: ' + instance.getTime().toFixed(3) + 's\n');
-  instance.write('Last key name: ' + lastKeyName + '                \n\n');
-  instance.write('Use arrows to move.\n');
-  instance.write('Press Escape to exit...\n');
 };
 
 const keypressHandler = (instance, keyName) => {
-  lastKeyName = keyName;
-
   switch (keyName) {
-    case 'down':
+    case 'ArrowDown':
       posY = (posY + 1) % BOARD_HEIGHT;
       break;
-    case 'up':
+    case 'ArrowUp':
       posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
       break;
-    case 'left':
+    case 'ArrowLeft':
       posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
       break;
-    case 'right':
+    case 'ArrowRight':
       posX = (posX + 1) % BOARD_WIDTH;
       break;
-    case 'escape':
+    case 'Escape':
       instance.exit();
       break;
   }
@@ -107,75 +108,7 @@ terminalGameIo = createTerminalGameIo({
 });
 ```
 
-## Example - TypeScript
-
-```typescript
-import {
-  createTerminalGameIo,
-  FrameHandler,
-  ITerminalGameIo,
-  KeypressHandler
-} from 'terminal-game-io'; 
-
-const FPS = 5;
-const BOARD_WIDTH = 40;
-const BOARD_HEIGHT = 12;
-
-let terminalGameIo: ITerminalGameIo;
-let lastKeyName = '';
-let posX = Math.round(BOARD_WIDTH / 2);
-let posY = Math.round(BOARD_HEIGHT / 2);
-let frameNumber = 0;
-
-const frameHandler: FrameHandler = (instance: ITerminalGameIo) => {
-  let frameData = '';
-
-  for (let y = 0; y < BOARD_HEIGHT; y++) {
-    for (let x = 0; x < BOARD_WIDTH; x++) {
-      frameData += (posX === x && posY === y) ? '@' : '.';
-    }
-  }
-
-  instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
-  instance.write('Frame: ' + (frameNumber++) + '\n');
-  instance.write('Time: ' + instance.getTime().toFixed(3) + 's\n');
-  instance.write('Last key name: ' + lastKeyName + '                \n\n');
-  instance.write('Use arrows to move.\n');
-  instance.write('Press Escape to exit...\n');
-};
-
-const keypressHandler: KeypressHandler = (instance: ITerminalGameIo, keyName: string) => {
-  lastKeyName = keyName;
-
-  switch (keyName) {
-    case 'down':
-      posY = (posY + 1) % BOARD_HEIGHT;
-      break;
-    case 'up':
-      posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
-      break;
-    case 'left':
-      posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
-      break;
-    case 'right':
-      posX = (posX + 1) % BOARD_WIDTH;
-      break;
-    case 'escape':
-      instance.exit();
-      break;
-  }
-
-  frameHandler(instance);
-};
-
-terminalGameIo = createTerminalGameIo({
-  fps: FPS,
-  frameHandler,
-  keypressHandler
-});
-```
-
-## Example - 'web terminal' in your browser in pure JavaScript
+## Simplest example - browser, clean JavaScript
 
 Running in browser is also easy. Just create `index.html` with the content below.
 
@@ -184,39 +117,11 @@ Running in browser is also easy. Just create `index.html` with the content below
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Terminal Game UI</title>
-  <style>
-    .mobile-device-buttons {
-      position: fixed;
-      display: block;
-      width: 33%;
-      height: 50%;
-    }
-    .mobile-device-buttons:hover {
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-  </style>
+  <title>Terminal Game IO</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body onLoad="run()">
   <pre id="root"></pre>
-
-  <a
-    href="javascript:void(0)" onClick="handleClick(event, 'ClickDown')"
-    class="mobile-device-buttons" style="top: 50%; left: 33%;"
-  ></a>
-  <a
-    href="javascript:void(0)" onClick="handleClick(event, 'ClickUp')"
-    class="mobile-device-buttons" style="top: 0; left: 33%;"
-  ></a>
-  <a
-    href="javascript:void(0)" onClick="handleClick(event, 'ClickLeft')"
-    class="mobile-device-buttons" style="top: 50%; left: 0;"
-  ></a>
-  <a
-    href="javascript:void(0)" onClick="handleClick(event, 'ClickRight')"
-    class="mobile-device-buttons" style="top: 50%; left: 66%;"
-  ></a>
 
   <script>
     var FPS = 5;
@@ -224,10 +129,8 @@ Running in browser is also easy. Just create `index.html` with the content below
     var BOARD_HEIGHT = 12;
 
     var terminalGameIo;
-    var lastKeyName = '';
     var posX = Math.round(BOARD_WIDTH / 2);
     var posY = Math.round(BOARD_HEIGHT / 2);
-    var frameNumber = 0;
 
     function frameHandler(instance) {
       var frameData = '';
@@ -237,52 +140,28 @@ Running in browser is also easy. Just create `index.html` with the content below
           frameData += (posX === x && posY === y) ? '@' : '.';
         }
       }
-
       instance.drawFrame(frameData, BOARD_WIDTH, BOARD_HEIGHT);
-      instance.write('Frame: ' + (frameNumber++) + '\n');
-      instance.write('Time: ' + instance.getTime().toFixed(3) + 's\n');
-      instance.write('Last key name: ' + lastKeyName + '\n\n');
-      instance.write('Use arrows to move.\n');
-      instance.write('Press Escape to exit...\n');
     }
 
     function keypressHandler(instance, keyName) {
-      lastKeyName = keyName;
-
       frameHandler(instance);
 
       switch (keyName) {
-        case 'Down':
         case 'ArrowDown':
-        case 'ClickDown':
           posY = (posY + 1) % BOARD_HEIGHT;
           break;
-        case 'Up':
         case 'ArrowUp':
-        case 'ClickUp':
           posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
           break;
-        case 'Left':
         case 'ArrowLeft':
-        case 'ClickLeft':
           posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
           break;
-        case 'Right':
         case 'ArrowRight':
-        case 'ClickRight':
           posX = (posX + 1) % BOARD_WIDTH;
           break;
-        case 'Esc':
         case 'Escape':
           instance.exit();
           break;
-      }
-    }
-
-    function handleClick(event, keyName) {
-      event.preventDefault();
-      if (terminalGameIo) {
-        terminalGameIo.triggerKeypress(keyName);
       }
     }
 
