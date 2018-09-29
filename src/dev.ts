@@ -4,6 +4,7 @@ import {
   createTerminalGameIo,
   FrameHandler,
   ITerminalGameIo,
+  Key,
   KeyName,
   KeypressHandler
 } from './lib';     // in your application replace it to: } from 'terminal-game-io';
@@ -49,23 +50,23 @@ const addLine = (frameData: string, line: string, lineWidth: number): string => 
     : frameData + line + (new Array(lineWidth - line.length + 1).join(' '));
 };
 
-const keypressHandler: KeypressHandler = (instance: ITerminalGameIo, keyName: string) => {
+const keypressHandler: KeypressHandler = (instance: ITerminalGameIo, keyName: KeyName) => {
   lastKeyName = keyName;
 
   switch (keyName) {
-    case KeyName.ArrowDown:
+    case Key.ArrowDown:
       posY = (posY + 1) % BOARD_HEIGHT;
       break;
-    case KeyName.ArrowUp:
+    case Key.ArrowUp:
       posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
       break;
-    case KeyName.ArrowLeft:
+    case Key.ArrowLeft:
       posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
       break;
-    case KeyName.ArrowRight:
+    case Key.ArrowRight:
       posX = (posX + 1) % BOARD_WIDTH;
       break;
-    case KeyName.Escape:
+    case Key.Escape:
       instance.exit();
       break;
   }

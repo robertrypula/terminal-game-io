@@ -63,7 +63,7 @@ export abstract class AbstractTerminalGameIo implements IAbstractTerminalGameIo 
     return difference / 1000;
   }
 
-  public triggerKeypress(keyName: KeyName | string): void {
+  public triggerKeypress(keyName: KeyName): void {
     if (!this.active) {
       return;
     }

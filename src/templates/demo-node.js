@@ -3,6 +3,8 @@
 const TerminalGameIo =
   require('./terminal-game-io-v3.0.0-rc.js'); // in your application replace it to: require('terminal-game-io');
 
+const Key = TerminalGameIo.Key;
+
 const FPS = 5;
 const BOARD_WIDTH = 40;
 const BOARD_HEIGHT = 12;
@@ -48,19 +50,19 @@ const keypressHandler = (instance, keyName) => {
   lastKeyName = keyName;
 
   switch (keyName) {
-    case 'ArrowDown':
+    case Key.ArrowDown:
       posY = (posY + 1) % BOARD_HEIGHT;
       break;
-    case 'ArrowUp':
+    case Key.ArrowUp:
       posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
       break;
-    case 'ArrowLeft':
+    case Key.ArrowLeft:
       posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
       break;
-    case 'ArrowRight':
+    case Key.ArrowRight:
       posX = (posX + 1) % BOARD_WIDTH;
       break;
-    case 'Escape':
+    case Key.Escape:
       instance.exit();
       break;
   }

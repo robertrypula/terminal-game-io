@@ -1,7 +1,9 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
-export enum KeyName {
-  UnknownKey = '',
+export type KeyName = Key | string;
+
+export enum Key {
+  Unknown = '',
 
   // other Ascii
   Backspace = 'Backspace',
@@ -41,10 +43,10 @@ export enum KeyName {
 
 export interface IKeyNameMapBrowser {
   keyNameIn: string[];
-  keyNameOut: KeyName | string;
+  keyNameOut: KeyName;
 }
 
 export interface IKeyNameMapNode {
   data: number[][];
-  keyName: KeyName | string;
+  keyName: KeyName;
 }

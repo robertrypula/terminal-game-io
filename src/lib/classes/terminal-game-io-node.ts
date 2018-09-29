@@ -21,7 +21,7 @@ export class TerminalGameIoNode extends AbstractTerminalGameIo implements ITermi
   protected initializeEvents(): void {
     process.stdin.setRawMode(true);
     process.stdin.on('data', (buffer: Buffer) => {
-      const keyName = getKeyName(buffer.toJSON().data);
+      const keyName: KeyName = getKeyName(buffer.toJSON().data);
 
       // TODO on ssh connections more than one key might be present in the data array - fix it
 

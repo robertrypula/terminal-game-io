@@ -2,6 +2,8 @@
 
 declare var document: Document;
 declare var global: NodeJS.Global;
+declare var navigator: Navigator;
+declare var window: Window;
 
 /*
 isNode && isBrowser based on:

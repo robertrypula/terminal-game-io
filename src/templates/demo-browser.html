@@ -33,10 +33,10 @@
   <pre id="root"></pre>
 
   <div class="mobile-device-buttons">
-    <button onClick="handleClick(event, 'ArrowDown')" style="top: 50%; left: 33%;"></button>
-    <button onClick="handleClick(event, 'ArrowUp')" style="top: 0; left: 33%;"></button>
-    <button onClick="handleClick(event, 'ArrowLeft')" style="top: 50%; left: 0;"></button>
-    <button onClick="handleClick(event, 'ArrowRight')" style="top: 50%; left: 66%;"></button>
+    <button onClick="handleClick(event, TerminalGameIo.Key.ArrowDown)" style="top: 50%; left: 33%;"></button>
+    <button onClick="handleClick(event, TerminalGameIo.Key.ArrowUp)" style="top: 0; left: 33%;"></button>
+    <button onClick="handleClick(event, TerminalGameIo.Key.ArrowLeft)" style="top: 50%; left: 0;"></button>
+    <button onClick="handleClick(event, TerminalGameIo.Key.ArrowRight)" style="top: 50%; left: 66%;"></button>
   </div>
 
   <script>
@@ -87,19 +87,19 @@
       frameHandler(instance);
 
       switch (keyName) {
-        case 'ArrowDown':
+        case TerminalGameIo.Key.ArrowDown:
           posY = (posY + 1) % BOARD_HEIGHT;
           break;
-        case 'ArrowUp':
+        case TerminalGameIo.Key.ArrowUp:
           posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
           break;
-        case 'ArrowLeft':
+        case TerminalGameIo.Key.ArrowLeft:
           posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
           break;
-        case 'ArrowRight':
+        case TerminalGameIo.Key.ArrowRight:
           posX = (posX + 1) % BOARD_WIDTH;
           break;
-        case 'Escape':
+        case TerminalGameIo.Key.Escape:
           instance.exit();
           break;
       }

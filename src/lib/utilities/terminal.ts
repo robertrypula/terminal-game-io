@@ -1,6 +1,6 @@
 // Copyright (c) 2018 Robert Rypuła - https://github.com/robertrypula
 
-import { IKeyNameMapNode, KeyName } from '../models/key-name.interface';
+import { IKeyNameMapNode, Key, KeyName } from '../models/key-name.interface';
 
 const CSI = String.fromCharCode(27) + '[';
 
@@ -15,39 +15,39 @@ const isSingleBytePrintableAscii = (data: number[]): boolean => {
 
 const keyMap: IKeyNameMapNode[] = [
   // other ASCII
-  { data: [[8], [127]], keyName: KeyName.Backspace }, // ssh connection via putty generates 127 for Backspace - weird...
-  { data: [[9]], keyName: KeyName.Tab },
-  { data: [[13]], keyName: KeyName.Enter },
-  { data: [[27]], keyName: KeyName.Escape },
-  { data: [[32]], keyName: KeyName.Space },
-  { data: [[27, 91, 51, 126]], keyName: KeyName.Delete },
+  { data: [[8], [127]], keyName: Key.Backspace }, // ssh connection via putty generates 127 for Backspace - weird...
+  { data: [[9]], keyName: Key.Tab },
+  { data: [[13]], keyName: Key.Enter },
+  { data: [[27]], keyName: Key.Escape },
+  { data: [[32]], keyName: Key.Space },
+  { data: [[27, 91, 51, 126]], keyName: Key.Delete },
   // arrows
-  { data: [[27, 91, 65]], keyName: KeyName.ArrowUp },
-  { data: [[27, 91, 66]], keyName: KeyName.ArrowDown },
-  { data: [[27, 91, 67]], keyName: KeyName.ArrowRight },
-  { data: [[27, 91, 68]], keyName: KeyName.ArrowLeft },
+  { data: [[27, 91, 65]], keyName: Key.ArrowUp },
+  { data: [[27, 91, 66]], keyName: Key.ArrowDown },
+  { data: [[27, 91, 67]], keyName: Key.ArrowRight },
+  { data: [[27, 91, 68]], keyName: Key.ArrowLeft },
   // cursor position
-  { data: [[27, 91, 49, 126]], keyName: KeyName.Home },
-  { data: [[27, 91, 50, 126]], keyName: KeyName.Insert },
-  { data: [[27, 91, 52, 126]], keyName: KeyName.End },
-  { data: [[27, 91, 53, 126]], keyName: KeyName.PageUp },
-  { data: [[27, 91, 54, 126]], keyName: KeyName.PageDown },
+  { data: [[27, 91, 49, 126]], keyName: Key.Home },
+  { data: [[27, 91, 50, 126]], keyName: Key.Insert },
+  { data: [[27, 91, 52, 126]], keyName: Key.End },
+  { data: [[27, 91, 53, 126]], keyName: Key.PageUp },
+  { data: [[27, 91, 54, 126]], keyName: Key.PageDown },
   // functional
-  { data: [[27, 91, 91, 65], [27, 91, 49, 49, 126]], keyName: KeyName.F1 },
-  { data: [[27, 91, 91, 66], [27, 91, 49, 50, 126]], keyName: KeyName.F2 },
-  { data: [[27, 91, 91, 67], [27, 91, 49, 51, 126]], keyName: KeyName.F3 },
-  { data: [[27, 91, 91, 68], [27, 91, 49, 52, 126]], keyName: KeyName.F4 },
-  { data: [[27, 91, 91, 69], [27, 91, 49, 53, 126]], keyName: KeyName.F5 },
-  { data: [[27, 91, 49, 55, 126]], keyName: KeyName.F6 },
-  { data: [[27, 91, 49, 56, 126]], keyName: KeyName.F7 },
-  { data: [[27, 91, 49, 57, 126]], keyName: KeyName.F8 },
-  { data: [[27, 91, 50, 48, 126]], keyName: KeyName.F9 },
-  { data: [[27, 91, 50, 49, 126]], keyName: KeyName.F10 },
-  { data: [[27, 91, 50, 51, 126]], keyName: KeyName.F11 },
-  { data: [[27, 91, 50, 52, 126]], keyName: KeyName.F12 }
+  { data: [[27, 91, 91, 65], [27, 91, 49, 49, 126]], keyName: Key.F1 },
+  { data: [[27, 91, 91, 66], [27, 91, 49, 50, 126]], keyName: Key.F2 },
+  { data: [[27, 91, 91, 67], [27, 91, 49, 51, 126]], keyName: Key.F3 },
+  { data: [[27, 91, 91, 68], [27, 91, 49, 52, 126]], keyName: Key.F4 },
+  { data: [[27, 91, 91, 69], [27, 91, 49, 53, 126]], keyName: Key.F5 },
+  { data: [[27, 91, 49, 55, 126]], keyName: Key.F6 },
+  { data: [[27, 91, 49, 56, 126]], keyName: Key.F7 },
+  { data: [[27, 91, 49, 57, 126]], keyName: Key.F8 },
+  { data: [[27, 91, 50, 48, 126]], keyName: Key.F9 },
+  { data: [[27, 91, 50, 49, 126]], keyName: Key.F10 },
+  { data: [[27, 91, 50, 51, 126]], keyName: Key.F11 },
+  { data: [[27, 91, 50, 52, 126]], keyName: Key.F12 }
 ];
 
-export const getKeyName = (data: number[]): string => {
+export const getKeyName = (data: number[]): KeyName => {
   let match: IKeyNameMapNode[];
 
   if (isSingleBytePrintableAscii(data)) {
@@ -64,5 +64,5 @@ export const getKeyName = (data: number[]): string => {
     return match[0].keyName;
   }
 
-  return KeyName.UnknownKey;
+  return Key.Unknown;
 };

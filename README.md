@@ -54,12 +54,14 @@ npm install terminal-game-io
 
 ## Simplest example - NodeJs, clean JavaScript
 
-Just follow the installation instruction and create `test.js` file with the content below. At the end execute the `node test.js` command.
+Follow the installation instruction and create `test.js` file with the content below. At the end execute the `node test.js` command.
 
 ```javascript
 const TerminalGameIo = require('terminal-game-io');
 
-const FPS = 5;
+const Key = TerminalGameIo.Key;
+
+const FPS = 1;
 const BOARD_WIDTH = 40;
 const BOARD_HEIGHT = 12;
 
@@ -80,19 +82,19 @@ const frameHandler = (instance) => {
 
 const keypressHandler = (instance, keyName) => {
   switch (keyName) {
-    case 'ArrowDown':
+    case Key.ArrowDown:
       posY = (posY + 1) % BOARD_HEIGHT;
       break;
-    case 'ArrowUp':
+    case Key.ArrowUp:
       posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
       break;
-    case 'ArrowLeft':
+    case Key.ArrowLeft:
       posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
       break;
-    case 'ArrowRight':
+    case Key.ArrowRight:
       posX = (posX + 1) % BOARD_WIDTH;
       break;
-    case 'Escape':
+    case Key.Escape:
       instance.exit();
       break;
   }
@@ -106,6 +108,8 @@ terminalGameIo = TerminalGameIo.createTerminalGameIo({
   keypressHandler
 });
 ```
+
+Use Arrows to move and Escape to exit. For more examples see section at very top of this readme.
 
 ## Simplest example - browser, clean JavaScript
 
@@ -123,7 +127,7 @@ Running in browser is also easy. Just create `index.html` with the content below
   <pre id="root"></pre>
 
   <script>
-    var FPS = 5;
+    var FPS = 1;
     var BOARD_WIDTH = 40;
     var BOARD_HEIGHT = 12;
 
@@ -146,19 +150,19 @@ Running in browser is also easy. Just create `index.html` with the content below
       frameHandler(instance);
 
       switch (keyName) {
-        case 'ArrowDown':
+        case TerminalGameIo.Key.ArrowDown:
           posY = (posY + 1) % BOARD_HEIGHT;
           break;
-        case 'ArrowUp':
+        case TerminalGameIo.Key.ArrowUp:
           posY = posY === 0 ? BOARD_HEIGHT - 1 : posY - 1;
           break;
-        case 'ArrowLeft':
+        case TerminalGameIo.Key.ArrowLeft:
           posX = posX === 0 ? BOARD_WIDTH - 1 : posX - 1;
           break;
-        case 'ArrowRight':
+        case TerminalGameIo.Key.ArrowRight:
           posX = (posX + 1) % BOARD_WIDTH;
           break;
-        case 'Escape':
+        case TerminalGameIo.Key.Escape:
           instance.exit();
           break;
       }
@@ -176,6 +180,9 @@ Running in browser is also easy. Just create `index.html` with the content below
   <script src="https://unpkg.com/terminal-game-io"></script>
 </html>
 ```
+
+Similar as in NodeJs example you can use Arrows to move and Escape to stop. For more examples 
+see section at very top of this readme.
 
 ## Want to check this project in development mode?
 

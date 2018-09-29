@@ -27,7 +27,7 @@ export class TerminalGameIoBrowser extends AbstractTerminalGameIo implements ITe
 
   protected initializeEvents(): void {
     this.keydownEventListener = (e: KeyboardEvent): void => {
-      const keyName = getNormalizedKeyName(e);
+      const keyName: KeyName = getNormalizedKeyName(e);
 
       this.keypressHandler(this, keyName);
       e.preventDefault();

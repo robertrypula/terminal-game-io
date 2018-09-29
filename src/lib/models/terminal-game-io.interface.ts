@@ -21,4 +21,4 @@ export interface ITerminalGameIoStatic {
 export type TerminalGameIoFactory = (options: ITerminalGameIoOptions) => ITerminalGameIo;
 
 export type FrameHandler = (instance: ITerminalGameIo) => void;
-export type KeypressHandler = (instance: ITerminalGameIo, keyName: KeyName | string) => void;
+export type KeypressHandler = (instance: ITerminalGameIo, keyName: KeyName) => void;

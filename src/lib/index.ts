@@ -4,4 +4,4 @@ export * from './models/terminal-game-io.interface';
 export * from './terminal-game-io.factory';
 export * from './utilities/environment';
 export * from './version';
-export { KeyName } from './models/key-name.interface';
+export { Key, KeyName } from './models/key-name.interface';
