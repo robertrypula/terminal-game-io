@@ -31,7 +31,14 @@ npm install terminal-game-io
 
 ## Changelog
 
-### 3.0.0
+## Still TODO
+
+- render the frame only if it's different than previous (easy performance fix)
+- render only part that really changed (more complex performance fix)
+- use requestAnimationFrame
+- write unit tests
+
+### v3.0.0 - ?? September 2018
 - remove externals ('process' and 'readline')
 - split main class into two (one for node, one for browser)
 - normalize keyNames, currently there is a mismatch between node and browser
@@ -39,18 +46,11 @@ npm install terminal-game-io
 - fix mobile buttons on demo apps
 - add keyName constants
 
-### 2.x.x
-- [DONE] export env utils (isBrowser, isNode)
-- [DONE] add ability to change DOM element id
-- [DONE] add ability to trigger keypress handler from other sources (mouse click, swipe event)
-- [DONE] fix error with node environment detection
-
-## TODO
-
-- render the frame only if it's different than previous (easy performance fix)
-- render only part that really changed (more complex performance fix)
-- use requestAnimationFrame
-- write unit tests
+### v2.x.x - August/September 2018
+- export env utils (isBrowser, isNode)
+- add ability to change DOM element id
+- add ability to trigger keypress handler from other sources (mouse click, swipe event)
+- fix error with node environment detection
 
 ## Simplest example - NodeJs, clean JavaScript
 
