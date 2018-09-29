@@ -2,7 +2,6 @@
 
 const TerminalGameIo =
   require('./terminal-game-io-v3.0.0-rc.js'); // in your application replace it to: require('terminal-game-io');
-const createTerminalGameIo = TerminalGameIo.createTerminalGameIo;
 
 const FPS = 5;
 const BOARD_WIDTH = 40;
@@ -69,7 +68,7 @@ const keypressHandler = (instance, keyName) => {
   frameHandler(instance);
 };
 
-terminalGameIo = createTerminalGameIo({
+terminalGameIo = TerminalGameIo.createTerminalGameIo({
   fps: FPS,
   frameHandler,
   keypressHandler

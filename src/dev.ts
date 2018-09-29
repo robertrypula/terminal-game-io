@@ -6,7 +6,7 @@ import {
   ITerminalGameIo,
   KeyName,
   KeypressHandler
-} from './main';     // in your application replace it to: } from 'terminal-game-io';
+} from './lib';     // in your application replace it to: } from 'terminal-game-io';
 
 const FPS = 5;
 const BOARD_WIDTH = 40;

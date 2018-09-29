@@ -16,7 +16,7 @@ Browser example:
 
 [![Terminal example](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)
 
-Web example available [here](https://cdn.rypula.pl/terminal-game-io/v3.0.0-rc/demo-browser.html)
+You can check the browser example [here](https://cdn.rypula.pl/terminal-game-io/v3.0.0-rc/demo-browser.html)
 
 Interactive code examples available on CodeSandbox.io:
 - Clean JavaScript example [here](https://codesandbox.io/s/4m94kx0z9)
@@ -46,7 +46,7 @@ npm install terminal-game-io
 - fix mobile buttons on demo apps
 - add keyName constants
 
-### v2.x.x - August/September 2018
+### v1.x.x/v2.x.x - August/September 2018
 - export env utils (isBrowser, isNode)
 - add ability to change DOM element id
 - add ability to trigger keypress handler from other sources (mouse click, swipe event)
@@ -58,7 +58,6 @@ Just follow the installation instruction and create `test.js` file with the cont
 
 ```javascript
 const TerminalGameIo = require('terminal-game-io');
-const createTerminalGameIo = TerminalGameIo.createTerminalGameIo;
 
 const FPS = 5;
 const BOARD_WIDTH = 40;
@@ -101,7 +100,7 @@ const keypressHandler = (instance, keyName) => {
   frameHandler(instance);
 };
 
-terminalGameIo = createTerminalGameIo({
+terminalGameIo = TerminalGameIo.createTerminalGameIo({
   fps: FPS,
   frameHandler,
   keypressHandler
