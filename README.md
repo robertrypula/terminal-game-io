@@ -31,7 +31,7 @@ npm install terminal-game-io
 
 ## Changelog
 
-## Still TODO
+### Still TODO
 
 - render the frame only if it's different than previous (easy performance fix)
 - render only part that really changed (more complex performance fix)
