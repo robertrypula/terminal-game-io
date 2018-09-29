@@ -30,7 +30,7 @@ export class TerminalGameIoBrowser extends AbstractTerminalGameIo implements ITe
       const keyName: KeyName = getNormalizedKeyName(e);
 
       this.keypressHandler(this, keyName);
-      e.preventDefault();
+      // e.preventDefault();    // TODO think about it
     };
 
     document.addEventListener('keydown', this.keydownEventListener);

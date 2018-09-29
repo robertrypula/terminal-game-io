@@ -16,7 +16,7 @@ Browser example:
 
 [![Terminal example](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)
 
-You can check the browser example [here](https://cdn.rypula.pl/terminal-game-io/v3.0.0-rc/demo-browser.html)
+You can check the browser example [here](https://cdn.rypula.pl/terminal-game-io/v3.0.0/demo-browser.html)
 
 Interactive code examples available on CodeSandbox.io:
 - Clean JavaScript example [here](https://codesandbox.io/s/4m94kx0z9)
@@ -35,6 +35,8 @@ npm install terminal-game-io
 
 - render the frame only if it's different than previous (easy performance fix)
 - render only part that really changed (more complex performance fix)
+- fix ssh connection double keypress bug
+- think about prevent default of keyboard event
 - use requestAnimationFrame
 - write unit tests
 

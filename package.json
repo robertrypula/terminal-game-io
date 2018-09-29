@@ -1,6 +1,6 @@
 {
   "name": "terminal-game-io",
-  "version": "3.0.0-rc",
+  "version": "3.0.0",
   "description": "It's never been easier to start writing ASCII games in NodeJs or browser. This package handles for you basic input (keyboard events) and output (ASCII 'frame').",
   "keywords": [
     "ascii game",
@@ -26,7 +26,7 @@
     "npm-check": "npm-check --skip-unused",
     "npm-check:u": "npm-check --skip-unused -u"
   },
-  "main": "dist/terminal-game-io-v3.0.0-rc.js",
+  "main": "dist/terminal-game-io-v3.0.0.js",
   "types": "dist/main.d.ts",
   "files": [
     "dist/"
