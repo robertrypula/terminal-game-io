@@ -6,7 +6,7 @@
 [![dependencies Status](https://david-dm.org/robertrypula/terminal-game-io/status.svg)](https://david-dm.org/robertrypula/terminal-game-io)
 [![devDependencies Status](https://david-dm.org/robertrypula/terminal-game-io/dev-status.svg)](https://david-dm.org/robertrypula/terminal-game-io?type=dev)
 
-It's never been easier to start writing ASCII games in NodeJs or browser. This package handles for you basic input (keyboard events) and output (ASCII 'frame').
+It has never been easier to start writing ASCII games in NodeJs or browser. This package handles for you basic input (keyboard events) and output (ASCII 'frame').
 
 NodeJs terminal example:
 
@@ -49,6 +49,7 @@ npm install terminal-game-io
 - add keyName constants
 
 ### v1.x.x/v2.x.x - August/September 2018
+- create project core
 - export env utils (isBrowser, isNode)
 - add ability to change DOM element id
 - add ability to trigger keypress handler from other sources (mouse click, swipe event)
