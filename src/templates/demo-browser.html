@@ -84,8 +84,6 @@
     function keypressHandler(instance, keyName) {
       lastKeyName = keyName;
 
-      frameHandler(instance);
-
       switch (keyName) {
         case TerminalGameIo.Key.ArrowDown:
           posY = (posY + 1) % BOARD_HEIGHT;
@@ -103,6 +101,8 @@
           instance.exit();
           break;
       }
+
+      frameHandler(instance);
     }
 
     function handleClick(event, keyName) {
