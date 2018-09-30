@@ -40,7 +40,7 @@ npm install terminal-game-io
 - use requestAnimationFrame
 - write unit tests
 
-### v3.0.0 - ?? September 2018
+### v3.0.0 - 30 September 2018
 - remove externals ('process' and 'readline')
 - split main class into two (one for node, one for browser)
 - normalize keyNames, currently there is a mismatch between node and browser
