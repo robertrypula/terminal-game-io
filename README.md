@@ -21,7 +21,7 @@ You can check the browser example [here](https://cdn.rypula.pl/terminal-game-io/
 Interactive code examples:
 - Clean JavaScript example [here](https://codesandbox.io/s/4m94kx0z9)
 - Clean JavaScript example with mobile device support [here](https://codesandbox.io/s/nrll993jvm)
-- Angular 6 example [here](https://stackblitz.com/edit/terminal-game-io-angular?file=src%2Fapp%2Fgame%2Fgame.component.ts)
+- **Angular 6** example [here](https://stackblitz.com/edit/terminal-game-io-angular?file=src%2Fapp%2Fgame%2Fgame.component.ts)
 
 ## Installation
 
