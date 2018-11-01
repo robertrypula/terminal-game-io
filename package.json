@@ -3,12 +3,17 @@
   "version": "3.0.1-rc",
   "description": "It has never been easier to start writing ASCII games in NodeJs or browser. This package handles for you basic input (keyboard events) and output (ASCII 'frame').",
   "keywords": [
+    "angular",
+    "angular6",
     "ascii game",
+    "escape codes",
+    "node escape codes",
     "node game",
     "nodejs game",
     "terminal game",
     "terminal keypress",
-    "terminal render frame"
+    "terminal render frame",
+    "type script"
   ],
   "author": "Robert Rypuła",
   "license": "MIT",
