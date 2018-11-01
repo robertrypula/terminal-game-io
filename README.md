@@ -38,6 +38,7 @@ npm install terminal-game-io
 - fix ssh connection double keypress bug
 - think about prevent default of keyboard event
 - use requestAnimationFrame
+- probably `instance` parameter is not required at `keypressHandler` and `frameHandler` - I don't remember why I added it ;)
 - write unit tests
 
 ### v3.0.0 - 30 September 2018
