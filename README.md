@@ -16,7 +16,7 @@ Browser example:
 
 [![Terminal example](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)
 
-You can check the browser example [here](https://cdn.rypula.pl/terminal-game-io/v3.0.0/demo-browser.html)
+You can check the browser example [here](https://cdn.rypula.pl/terminal-game-io/v3.0.1-rc/demo-browser.html)
 
 Interactive code examples available on CodeSandbox.io:
 - Clean JavaScript example [here](https://codesandbox.io/s/4m94kx0z9)
