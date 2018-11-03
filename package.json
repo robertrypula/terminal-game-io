@@ -1,6 +1,6 @@
 {
   "name": "terminal-game-io",
-  "version": "3.0.1-rc",
+  "version": "3.1.0",
   "description": "It has never been easier to start writing ASCII games in NodeJs or browser. This package handles for you basic input (keyboard events) and output (ASCII 'frame').",
   "keywords": [
     "angular",
@@ -13,7 +13,7 @@
     "terminal game",
     "terminal keypress",
     "terminal render frame",
-    "type script"
+    "typescript"
   ],
   "author": "Robert Rypuła",
   "license": "MIT",
@@ -31,7 +31,7 @@
     "npm-check": "npm-check --skip-unused",
     "npm-check:u": "npm-check --skip-unused -u"
   },
-  "main": "dist/terminal-game-io-v3.0.1-rc.js",
+  "main": "dist/terminal-game-io-v3.1.0.js",
   "types": "dist/main.d.ts",
   "files": [
     "dist/"

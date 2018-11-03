@@ -16,7 +16,7 @@ Browser example:
 
 [![Terminal example](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)](https://cdn.rypula.pl/terminal-game-io/demo-browser.gif)
 
-You can check the browser example [here](https://cdn.rypula.pl/terminal-game-io/v3.0.1-rc/demo-browser.html)
+You can check the browser example [here](https://cdn.rypula.pl/terminal-game-io/v3.1.0/demo-browser.html)
 
 Interactive code examples:
 - Clean JavaScript simplest example [here](https://codesandbox.io/s/4m94kx0z9)
@@ -35,6 +35,7 @@ npm install terminal-game-io
 ## Changelog
 
 ### Still TODO
+- small refactor of dev/demo files structure as currently it's not clear which file is used in particular development mode 
 - render only part that really changed (more complex performance fix)
 - fix ssh connection double keypress bug
 - think about prevent default of keyboard event
