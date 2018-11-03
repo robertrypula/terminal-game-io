@@ -19,9 +19,12 @@ Browser example:
 You can check the browser example [here](https://cdn.rypula.pl/terminal-game-io/v3.0.1-rc/demo-browser.html)
 
 Interactive code examples:
-- Clean JavaScript example [here](https://codesandbox.io/s/4m94kx0z9)
-- Clean JavaScript example with mobile device support [here](https://codesandbox.io/s/nrll993jvm)
+- Clean JavaScript simplest example [here](https://codesandbox.io/s/4m94kx0z9)
+- Clean JavaScript full example with mobile device support [here](https://codesandbox.io/s/nrll993jvm)
 - **Angular 6** example [here](https://stackblitz.com/edit/terminal-game-io-angular?file=src%2Fapp%2Fgame%2Fgame.component.ts)
+
+Project that uses `terminal-game-io` lib:
+- [Simple Tetris](https://github.com/robertrypula/simple-tetris)
 
 ## Installation
 
@@ -32,14 +35,16 @@ npm install terminal-game-io
 ## Changelog
 
 ### Still TODO
-
-- render the frame only if it's different than previous (easy performance fix)
 - render only part that really changed (more complex performance fix)
 - fix ssh connection double keypress bug
 - think about prevent default of keyboard event
 - use requestAnimationFrame
 - probably `instance` parameter is not required at `keypressHandler` and `frameHandler` - I don't remember why I added it ;)
 - write unit tests
+
+### v3.0.1 - 03 November 2018
+- [bugfix] blank first frame after initialization
+- render the frame only if it's different than previous (easy performance fix)
 
 ### v3.0.0 - 30 September 2018
 - remove externals ('process' and 'readline')

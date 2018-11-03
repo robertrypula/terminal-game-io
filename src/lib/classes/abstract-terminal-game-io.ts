@@ -14,6 +14,7 @@ export abstract class AbstractTerminalGameIo implements IAbstractTerminalGameIo 
   protected frameHandler: AbstractFrameHandler;
   protected intervalId: any;
   protected keypressHandler: AbstractKeypressHandler;
+  protected currentFrameData: string;
   protected startTime: number;
 
   protected constructor(options: IAbstractTerminalGameIoOptions) {
@@ -23,7 +24,7 @@ export abstract class AbstractTerminalGameIo implements IAbstractTerminalGameIo 
     this.startTime = new Date().getTime();
 
     this.initialize();
-    this.frameHandler(this);
+    setTimeout(() => this.frameHandler(this), 0);
   }
 
   public drawFrame(data: string, width: number, height: number): void {
@@ -39,6 +40,10 @@ export abstract class AbstractTerminalGameIo implements IAbstractTerminalGameIo 
       throw new Error('Frame data is not matching drawFrame dimensions');
     }
 
+    if (this.currentFrameData === data) {
+      return;
+    }
+
     this.clear();
     for (let y = 0; y < height; y++) {
       line = '';
@@ -48,6 +53,7 @@ export abstract class AbstractTerminalGameIo implements IAbstractTerminalGameIo 
       fullFrame += line + '\n';
     }
     this.write(fullFrame);
+    this.currentFrameData = data;
   }
 
   public exit(): void {
