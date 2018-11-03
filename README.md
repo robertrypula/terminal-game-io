@@ -42,9 +42,10 @@ npm install terminal-game-io
 - probably `instance` parameter is not required at `keypressHandler` and `frameHandler` - I don't remember why I added it ;)
 - write unit tests
 
-### v3.0.1 - 03 November 2018
+### v3.1.0 - 03 November 2018
 - [bugfix] blank first frame after initialization
 - render the frame only if it's different than previous (easy performance fix)
+- remove WrapperWebpackPlugin
 
 ### v3.0.0 - 30 September 2018
 - remove externals ('process' and 'readline')

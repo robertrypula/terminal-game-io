@@ -3,14 +3,12 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackExcludeAssetsPlugin = require('html-webpack-exclude-assets-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WrapperPlugin = require('wrapper-webpack-plugin');
 const { readFileSync } = require('fs');
 const packageJson = require('./package.json');
 const packageName = packageJson.name;
 const libraryName = getLibraryName(packageName);
 const versionFileContent = readFileSync(path.resolve(__dirname) + '/src/lib/version.ts', 'utf8');
 const version = getVersion(versionFileContent);
-const licence = readFileSync(path.resolve(__dirname) + '/LICENCE');
 
 function getLibraryName(packageName) {
   return packageName
@@ -63,9 +61,6 @@ function getConfig(env) {
       new webpack.DefinePlugin({
         DEVELOPMENT: JSON.stringify(env.DEVELOPMENT === true),
         PRODUCTION: JSON.stringify(env.PRODUCTION === true)
-      }),
-      new WrapperPlugin({    // TODO: on production build it's not working, all comments are removed
-        header: '/*\n' + licence + '*/\n\n'
       })
     ]
   };
